@@ -1,16 +1,6 @@
-# qingyuo_mobile
+# 项目概述
 
-A new Flutter project.
+一款减少旅行麻烦的生活类 App。该 App 有两个主要功能：
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. 智能制定计划；
+2. 租赁物品功能：通过这些功能，用户可以享受最好的旅行。
