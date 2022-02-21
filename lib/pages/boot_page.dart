@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,8 +11,10 @@ class BootPage extends StatefulWidget {
 }
 
 class _BootPageState extends State<BootPage> {
-  var currentTime = 6;
-  var timer;
+  int currentTime = 6;
+  // 未初始化的值在使用的时候会提示，用?可空类型或late关键字避免
+  // late Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
@@ -22,7 +23,7 @@ class _BootPageState extends State<BootPage> {
     // 这是指定时间之后执行因此，而不是每隔几秒执行依次。
     // Timer(Duration(seconds: 6), () {});
 
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         currentTime--;
       });
@@ -42,7 +43,7 @@ class _BootPageState extends State<BootPage> {
         children: <Widget>[
           Image(
             // AssetImage 用于加载本地图片，而NetworkImage 用于加载网络图片
-            image: AssetImage('assets/images/95581202_p0.jpg'),
+            image: const AssetImage('assets/images/95581202_p0.jpg'),
             fit: BoxFit.cover,
             // MediaQuery 查询设备屏幕相关的信息
             width: MediaQuery.of(context).size.width,
@@ -67,7 +68,7 @@ class _BootPageState extends State<BootPage> {
   void routePage() {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      return RootPage();
+      return const RootPage();
     }), (route) => false);
   }
 
@@ -85,13 +86,13 @@ class _BootPageState extends State<BootPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 '跳过',
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
               Text(
                 '${currentTime}s',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: Colors.white, fontSize: 12),
               )
             ],
           ),

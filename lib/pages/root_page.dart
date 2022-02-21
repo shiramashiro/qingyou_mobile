@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({Key? key}) : super(key: key);
+  const RootPage({Key? key}) : super(key: key);
 
   @override
   State<RootPage> createState() => _RootPageState();
@@ -10,8 +10,6 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('首页'),
-    );
+    return const Text('首页');
   }
 }
