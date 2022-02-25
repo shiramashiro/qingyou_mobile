@@ -10,6 +10,8 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
-    return const Text('首页');
+    return const Image(
+      image: AssetImage('assets/images/95581202_p0.jpg'),
+    );
   }
 }
