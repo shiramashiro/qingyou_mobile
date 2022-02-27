@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/pages/root_page.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
 
 class BootPage extends StatefulWidget {
@@ -16,19 +15,20 @@ class _BootPageState extends State<BootPage> {
   // 未初始化的值在使用的时候会提示，用?可空类型或late关键字避免
   Timer? timer;
 
+  /// 生命周期函数 initState()
   @override
   void initState() {
     super.initState();
 
-    /// Timer(Duration(seconds: 6), () {}); 是到达时间后执行依次；
-    /// Timer.periodic(Duration(seconds: 1). () {}); 是每隔多少时间执行依次。
+    /// Timer()：到达时间后执行依次；
+    /// Timer.periodic()：每隔多少秒执行一次。
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         currentTime--;
       });
       if (currentTime <= 0) {
         timer.cancel();
-        routePage();
+        router();
       }
     });
   }
@@ -57,7 +57,7 @@ class _BootPageState extends State<BootPage> {
                   opacity: 0.65,
                 ),
                 onPointerDown: (PointerEvent pointerEvent) {
-                  routePage();
+                  router();
                 },
               )),
         ],
@@ -66,15 +66,16 @@ class _BootPageState extends State<BootPage> {
   }
 
   /// 路由
-  void routePage() {
+  void router() {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (BuildContext context) => const LoginPage()),
         (route) => false);
   }
 
-  /// 倒计时按钮
-  /// ClipRRect：裁剪组件，用于裁剪子组件形状
+  /// 倒计时按钮。
+  /// ClipRRect：裁剪组件，用于裁剪子组件形状。
+  ///
   /// [opacity] 按钮透明度
   /// [buttonWidth] 按钮宽度
   /// [buttonHeight] 按钮高度
