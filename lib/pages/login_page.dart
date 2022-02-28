@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/components/qy_avatar.dart';
+import 'package:qingyuo_mobile/components/qy_button_circle.dart';
+import 'package:qingyuo_mobile/components/qy_input.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,13 +19,8 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Center(
-            child: ClipOval(
-              child: Image(
-                image: AssetImage('assets/images/95893409_p0.jpg'),
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
+            child: QYAvatar(
+              uri: AssetImage("assets/images/95893409_p0.jpg"),
             ),
           ),
 
@@ -30,25 +28,10 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 40.0),
             height: 60,
-            child: const TextField(
-              minLines: 1,
-              autofocus: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: "账号",
-                hintText: "请输入您的用户名/手机号码/邮箱",
-                prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  borderSide: BorderSide(
-                    color: Colors.lightBlue,
-                    width: 2.0,
-                  ),
-                ),
-              ),
+            child: const QYInput(
+              Icons.account_circle,
+              labelText: "账号",
+              hintText: "请输入手机号/邮箱/用户名",
             ),
           ),
 
@@ -56,59 +39,20 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.fromLTRB(40.0, 0, 40.0, 40.0),
             height: 60,
-            child: const TextField(
-              minLines: 1,
+            child: const QYInput(
+              Icons.lock,
+              labelText: "密码",
+              hintText: "请输入账号密码",
               obscureText: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: "密码",
-                hintText: "请输入您的密码",
-                prefixIcon: Icon(Icons.lock),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  borderSide: BorderSide(
-                    color: Colors.lightBlue,
-                    width: 2.0,
-                  ),
-                ),
-              ),
             ),
           ),
 
           /// 登陆按钮
-          Container(
+          QYButtonCircle(
+            "登录",
+            onTap: () {},
+            textStyle: const TextStyle(fontSize: 16.0, color: Colors.black87),
             margin: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0),
-            child: Center(
-              child: ClipOval(
-                child: InkWell(
-                  onTap: () {},
-                  // 水波纹的圆形
-                  borderRadius: BorderRadius.circular(50.0),
-                  // 点击之后水波纹的颜色
-                  highlightColor: const Color.fromRGBO(3, 169, 244, 0.25),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50.0),
-                      border: Border.all(
-                        width: 2,
-                        color: const Color.fromRGBO(50, 50, 50, 0.5),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        '登录',
-                        style: TextStyle(fontSize: 16.0, color: Colors.black87),
-                      ),
-                    ),
-                    width: 60,
-                    height: 60,
-                  ),
-                ),
-              ),
-            ),
           ),
 
           /// 其他服务
