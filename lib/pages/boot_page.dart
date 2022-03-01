@@ -11,62 +11,14 @@ class BootPage extends StatefulWidget {
 }
 
 class _BootPageState extends State<BootPage> {
-  int currentTime = 6;
-  // 未初始化的值在使用的时候会提示，用?可空类型或late关键字避免
-  Timer? timer;
+  /// [currentTime] 初始值为 6 秒
+  int currentTime = 1;
 
-  /// 生命周期函数 initState()
-  @override
-  void initState() {
-    super.initState();
+  /// 使用未初始化的值有错误提示。因此，用?可空类型或late关键字来避免
+  late Timer timer;
 
-    /// Timer()：到达时间后执行依次；
-    /// Timer.periodic()：每隔多少秒执行一次。
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        currentTime--;
-      });
-      if (currentTime <= 0) {
-        timer.cancel();
-        router();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Scaffold：包含导航栏、抽屉菜单以及底部导航菜单的容器，通过配置可以实现导航栏之类的UI。
-    return Scaffold(
-      // Stack：叠层布局，既不是上下排列，也不是左右排列，而是依次叠加排列。与 Positioned 布局结合就可以实现任意位置排列组件。
-      body: Stack(
-        children: <Widget>[
-          Image(
-            // AssetImage 用于加载本地图片；NetworkImage 用于加载网络图片
-            image: const AssetImage('assets/images/bootpage-background.jpg'),
-            fit: BoxFit.cover,
-            // MediaQuery：查询设备屏幕相关的信息
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),
-          Positioned(
-              //Positioned：主要用 top 和 right 来定位位置。
-              top: MediaQuery.of(context).padding.top + 10,
-              right: 10,
-              child: Listener(
-                child: countdownButton(
-                  opacity: 0.65,
-                ),
-                onPointerDown: (PointerEvent pointerEvent) {
-                  router();
-                },
-              )),
-        ],
-      ),
-    );
-  }
-
-  /// 路由
   void router() {
+    timer.cancel();
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (BuildContext context) => const LoginPage()),
@@ -109,6 +61,55 @@ class _BootPageState extends State<BootPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// Timer()：到达时间后执行依次；
+    /// Timer.periodic()：每隔多少秒执行一次。
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        currentTime--;
+      });
+      if (currentTime <= 0) {
+        router();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold：包含导航栏、抽屉菜单以及底部导航菜单的容器，通过配置可以实现导航栏之类的UI。
+    return Scaffold(
+      // Stack：叠层布局，既不是上下排列，也不是左右排列，而是依次叠加排列。与 Positioned 布局结合就可以实现任意位置排列组件。
+      body: Stack(
+        children: <Widget>[
+          Image(
+            // AssetImage 用于加载本地图片；NetworkImage 用于加载网络图片
+            image: const AssetImage('assets/images/boot_bg.jpg'),
+            fit: BoxFit.cover,
+            // MediaQuery：查询设备屏幕相关的信息
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Positioned(
+            //Positioned：主要用 top 和 right 来定位位置。
+            top: MediaQuery.of(context).padding.top + 10,
+            right: 10,
+            child: GestureDetector(
+              child: countdownButton(
+                opacity: 0.65,
+              ),
+              onTap: () {
+                router();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
