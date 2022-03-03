@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:qingyuo_mobile/models/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -33,6 +37,13 @@ class _LoginPageState extends State<LoginPage> {
   /// Form 的 Key
   GlobalKey formKey = GlobalKey<FormState>();
 
+  TextEditingController accCtrl = TextEditingController();
+  TextEditingController pwdCtrl = TextEditingController();
+
+  late bool isUname;
+  late bool isEmail;
+  late bool isPhone;
+
   /// @desc: 验证账号格式是否正确
   /// @author: shiramashiro
   /// @date: 2022/3/3
@@ -41,11 +52,11 @@ class _LoginPageState extends State<LoginPage> {
       return "账号不能为空";
     }
 
-    bool isPhone = RegExp(r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$")
+    isPhone = RegExp(r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$")
         .hasMatch(validator);
-    bool isUname = !(isPhone && RegExp(r"^[a-zA-Z0-9_-]{4,16}$").hasMatch(validator));
+    isUname = !(isPhone && RegExp(r"^[a-zA-Z0-9_-]{4,16}$").hasMatch(validator));
     bool isUname2Email = false;
-    bool isEmail = false;
+    isEmail = false;
 
     if (isUname) {
       if (validator.characters.length < 6) {
@@ -106,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   margin: EdgeInsets.fromLTRB(marginLeft, 80, marginRight, 20),
                   child: TextFormField(
+                    controller: accCtrl,
                     validator: (e) {
                       return verifyAccount(e);
                     },
@@ -136,17 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 20),
                   child: TextFormField(
-                    validator: (e) {
-                      String? msg;
-                      if (e!.isEmpty) {
-                        msg = "密码不能为空！";
-                      } else if (e.characters.length <= 6) {
-                        msg = "密码必须大于6位字符！";
-                      } else if (RegExp(r"\s+\b|\b\s").hasMatch(e)) {
-                        msg = "密码不能包含空格！";
-                      }
-                      return msg;
-                    },
+                    controller: pwdCtrl,
+                    validator: (e) {},
                     obscureText: true,
                     minLines: 1,
                     keyboardType: TextInputType.text,
@@ -205,9 +208,34 @@ class _LoginPageState extends State<LoginPage> {
 
                 /// 登录按钮
                 MaterialButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if ((formKey.currentState as FormState).validate()) {
-                      print('success!');
+                      User user;
+                      if (isUname) {
+                        user = User(psw: pwdCtrl.text, uname: accCtrl.text);
+                      } else if (isEmail) {
+                        user = User(psw: pwdCtrl.text, email: accCtrl.text);
+                      } else {
+                        user = User(psw: pwdCtrl.text, phone: accCtrl.text);
+                      }
+                      Future res =
+                          Dio().post('http://10.0.2.2:8080/users/login', data: user);
+                      EasyLoading.instance
+                        ..radius = 20
+                        ..maskType = EasyLoadingMaskType.clear
+                        ..loadingStyle = EasyLoadingStyle.dark;
+                      EasyLoading.show(status: '登录中...');
+                      res.then((value) {
+                        EasyLoading.dismiss();
+                        var data = jsonDecode(value.toString());
+                        if (data['state'] == 5000) {
+                          EasyLoading.showToast('未知错误');
+                        } else if (data['state'] == 5001) {
+                          EasyLoading.showToast('用户不存在');
+                        } else if (data['state'] == 5002) {
+                          EasyLoading.showToast('密码错误');
+                        }
+                      });
                     }
                   },
                   padding: const EdgeInsets.all(20),
