@@ -9,14 +9,77 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  /// 左外边距
   double marginLeft = 55;
+
+  /// 右外边距
   double marginRight = 55;
+
+  /// 输入框高度
   double inputHeight = 50;
+
+  /// 快捷登录字体大小
   double fastLogInFontSize = 12;
+
+  /// 文本字体大小
   double textFiledFontSize = 14;
+
+  /// 主轴居中
   MainAxisAlignment center = MainAxisAlignment.center;
+
+  /// 主轴均匀分布
   MainAxisAlignment spaceBetween = MainAxisAlignment.spaceBetween;
+
+  /// Form 的 Key
   GlobalKey formKey = GlobalKey<FormState>();
+
+  /// @desc: 验证账号格式是否正确
+  /// @author: shiramashiro
+  /// @date: 2022/3/3
+  String? verifyAccount(String? validator) {
+    if (validator!.isEmpty) {
+      return "账号不能为空";
+    }
+
+    bool isPhone = RegExp(r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$")
+        .hasMatch(validator);
+    bool isUname = !(isPhone && RegExp(r"^[a-zA-Z0-9_-]{4,16}$").hasMatch(validator));
+    bool isUname2Email = false;
+    bool isEmail = false;
+
+    if (isUname) {
+      if (validator.characters.length < 6) {
+        return "用户名不能少于6位字符";
+      }
+      isUname2Email = RegExp(r"@").hasMatch(validator);
+      if (isUname2Email) {
+        isUname = false;
+      }
+    }
+
+    if (isUname2Email) {
+      bool editingIsEmail = RegExp(
+              r"^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$")
+          .hasMatch(validator);
+      if (editingIsEmail && isUname2Email) {
+        isEmail = true;
+      }
+    }
+
+    if (isEmail || isUname || isPhone) {
+      return null;
+    } else {
+      if (isEmail == false) {
+        return "你输入的邮箱格式有问题";
+      } else if (isUname == false) {
+        return "你输入的用户名格式有误";
+      } else if (isPhone == false) {
+        return "你输入的电话格式有误";
+      } else {
+        return null;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.fromLTRB(marginLeft, 80, marginRight, 20),
                   child: TextFormField(
                     validator: (e) {
-                      bool isPhone = RegExp(r"1[3|4|5|7|8][0-9]\d{4,8}$").hasMatch(e!);
-                      bool isEmail = RegExp(r"[A-Za-z0-9\u4e00-\u9fa5]+").hasMatch(e);
-                      if (e.isEmpty) {
-                        return "账号不能为空！";
-                      } else if (RegExp(r"\s+\b|\b\s").hasMatch(e)) {
-                        return "账号不能包含空格！";
-                      } else if (!isPhone) {
-                        return "账号必须是正确的手机号！";
-                      } else if (!isEmail) {
-                        return "账号必须是正确的邮箱！";
-                      }
+                      return verifyAccount(e);
                     },
                     autofocus: true,
                     minLines: 1,
