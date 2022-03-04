@@ -1,9 +1,12 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/models/user.dart';
+
+import '../components/text_divider.dart';
+import '../http/http.dart';
+import '../models/user.dart';
+import '../utils/utils.dart';
+import 'register_page.dart';
+import 'root_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,12 +16,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  /// 左外边距
-  double marginLeft = 55;
-
-  /// 右外边距
-  double marginRight = 55;
-
   /// 输入框高度
   double inputHeight = 50;
 
@@ -37,12 +34,23 @@ class _LoginPageState extends State<LoginPage> {
   /// Form 的 Key
   GlobalKey formKey = GlobalKey<FormState>();
 
+  String loginUrl = "http://localhost:8080/users/login";
+
   TextEditingController accCtrl = TextEditingController();
   TextEditingController pwdCtrl = TextEditingController();
 
   bool isUname = false;
   bool isEmail = false;
   bool isPhone = false;
+
+  @override
+  void initState() {
+    super.initState();
+    EasyLoading.instance
+      ..radius = 20
+      ..maskType = EasyLoadingMaskType.clear
+      ..loadingStyle = EasyLoadingStyle.dark;
+  }
 
   /// @desc: 验证账号格式是否正确
   /// @author: shiramashiro
@@ -51,34 +59,17 @@ class _LoginPageState extends State<LoginPage> {
     /// 如果账号未输入，下面的步骤全部终止进行。
     if (e!.isEmpty) return "账号不能为空";
 
-    /// 声明手机号、用户名以及电子邮箱的正则表达式。
-    String phoneRegExp = r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$";
-    String unameRegExp = r"^[a-zA-Z0-9_-]{4,16}$";
-    String emailRegExp =
-        r"^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$";
-    String uname2PhoneRegExp = r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])";
-
-    /// 用户输入的账号是否符合手机号格式。
-    isPhone = RegExp(phoneRegExp).hasMatch(e);
-
-    isEmail = RegExp(emailRegExp).hasMatch(e);
+    isPhone = Utils.match(e, RegExpValues.phone);
+    isEmail = Utils.match(e, RegExpValues.email);
 
     /// 用户名的正则表达式中包含了数字，所以通常情况下，用户名与手机号的正则都匹配。
-    /// 对于这类情况，解决方案时：[isPhone] 和 [isUname] 进行且运算，最终结果取反。
     ///
-    /// 假设场景：
     /// 手机号为 true，用户名也为 true（开头解释了原因），无法分辨用户输入的是手机号还是用户名。
     /// 假设，用户想通过手机号方式登录，[isUname] 应该为 false。
     ///
-    /// 且运算原理：
-    /// 如果第一个操作对象为 false，运算第二个操作对象，如果两个操作对象都为 false ，结果返回 false。
-    /// 如果第一个操作对象为 true，运算第二个操作对象，如果操作对象为 false，结果返回 false；如果操作对象 true，结果返回 true。
-    ///
-    /// 综上所述：
     /// 手机号为 false，用户名为 true，结果返回 false。说明用户正在以用户名的方式进行输入，因此再取反，最终为 true。
     /// 手机号为 true，用户名为 true，结果返回 true，说明用户正在以手机号的方式进行输入，因此再取反，最终为 false。
-    /// 用户名为 true，电子邮箱为 true，结果范围 true，说明正在以电子邮箱的方式进行输入，因此再取反，最终为 false。
-    isUname = !(isPhone && RegExp(unameRegExp).hasMatch(e));
+    isUname = !(isPhone && Utils.match(e, RegExpValues.uname));
 
     if (isUname && isEmail) {
       if (RegExp(r"@").hasMatch(e)) {
@@ -90,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
     // 当匹配到用户名时，需要做以下几点操作，确保是否为用户名
     if (isUname) {
       // 如果用户名有手机号开头几位，例如 185，就说明用户输入的手机号
-      if (RegExp(uname2PhoneRegExp).hasMatch(e)) {
+      if (Utils.match(e, RegExpValues.uname2Phone)) {
         if (!isPhone) {
           // 但是最开始作了一个手机号验证，没有输入完整时，会提示电话个事有误
           return "你输入的电话格式有误";
@@ -101,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
         // 如果用户名没有手机号开头的几位，就说明是除了手机号外的两种类型
       } else {
         // 判断是否包含@符号，如果是就说明正在以邮箱输入，但是没有输入完整
-        if (RegExp(r"@").hasMatch(e)) {
+        if (Utils.match(e, r'@')) {
           // 没有输入完整，就说明并不匹配邮箱格式
           if (!isEmail) {
             return "你输入的邮箱格式有误";
@@ -127,46 +118,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  /// @desc: 验证密码格式是否正确
-  /// @author: shiramashiro
-  /// @date: 2022/3/4
-  String? verifyPassword(String? e) {
-    if (e!.isEmpty) return "密码不能为空";
-
-    String pswRegExp = r"^[0-9A-za-z\-\_\.]{6,16}$";
-
-    bool isCorrect = RegExp(pswRegExp).hasMatch(e);
-
-    if (isCorrect) {
-      return null;
-    } else {
-      return "字母、数字、_-. 长度在6~16位";
-    }
-  }
-
-  /// @desc: 设置 EasyLoading 相关配置
-  /// @author: shiramashiro
-  /// @date: 2022/3/4
-  setEasyLoadingConfig() {
-    EasyLoading.instance
-      ..radius = 20
-      ..maskType = EasyLoadingMaskType.clear
-      ..loadingStyle = EasyLoadingStyle.dark;
-  }
-
-  /// @desc: 判断状态码，并提示
-  /// @author: shiramashiro
-  /// @date: 2022/3/4
-  judgementStatusCode(dynamic data) {
-    if (data['state'] == 5000) {
-      EasyLoading.showToast('未知错误');
-    } else if (data['state'] == 5001) {
-      EasyLoading.showToast('用户不存在');
-    } else if (data['state'] == 5002) {
-      EasyLoading.showToast('密码错误');
-    }
-  }
-
   /// @desc: 封装表单数据
   /// @author: shiramashiro
   /// @date: 2022/3/4
@@ -182,187 +133,174 @@ class _LoginPageState extends State<LoginPage> {
     return user;
   }
 
-  /// @desc: 登陆方法
-  /// @author: shiramashiro
-  /// @date: 2022/3/4
-  login(String url) {
-    Future res = Dio(BaseOptions()).post(
-      url,
-      data: encapsulateData(),
-    );
-
-    setEasyLoadingConfig();
-    EasyLoading.show(status: '登录中...');
-
-    res.then((value) {
-      EasyLoading.dismiss();
-      judgementStatusCode(jsonDecode(value.toString()));
-    }, onError: (e) {
-      EasyLoading.dismiss();
-      EasyLoading.showToast('未知错误');
-    }).timeout(
-      const Duration(milliseconds: 12000),
-      onTimeout: () {
-        EasyLoading.dismiss();
-        EasyLoading.showToast('请求超时');
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          /// 头像
-          Container(
-            margin: EdgeInsets.fromLTRB(marginLeft, 40, marginRight, 0),
-            width: 100,
-            height: 100,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/95893409_p0.jpg"),
+      appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Utils.route(context, const RootPage());
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
+              const Text('登陆'),
+            ],
+          )),
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(55, 50, 55, 0),
+        child: Column(
+          children: [
+            /// 头像
+            const SizedBox(
+              width: 100,
+              height: 100,
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/images/95893409_p0.jpg"),
+              ),
             ),
-          ),
 
-          /// 表单
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                /// 账号输入框
-                Container(
-                  margin: EdgeInsets.fromLTRB(marginLeft, 80, marginRight, 20),
-                  child: TextFormField(
-                    controller: accCtrl,
-                    validator: (e) {
-                      return verifyAccount(e);
-                    },
-                    autofocus: true,
-                    minLines: 1,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(),
-                      labelStyle: TextStyle(fontSize: textFiledFontSize),
-                      hintStyle: TextStyle(fontSize: textFiledFontSize),
-                      labelText: '账号',
-                      hintText: '请输入手机号/邮箱/用户名',
-                      prefixIcon: const Icon(Icons.account_circle),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: Colors.lightBlue,
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// 密码输入框
-                Container(
-                  margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 20),
-                  child: TextFormField(
-                    controller: pwdCtrl,
-                    validator: (e) {
-                      return verifyPassword(e);
-                    },
-                    obscureText: true,
-                    minLines: 1,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(),
-                      labelStyle: TextStyle(fontSize: textFiledFontSize),
-                      hintStyle: TextStyle(fontSize: textFiledFontSize),
-                      labelText: '密码',
-                      hintText: '请输入账号密码',
-                      prefixIcon: const Icon(Icons.lock),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(
-                          color: Colors.lightBlue,
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// 其他服务
-                Container(
-                  margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 80),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          '密码找回',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                            decoration: TextDecoration.underline,
+            /// 表单
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    /// 账号输入框
+                    SizedBox(
+                      height: 85,
+                      child: TextFormField(
+                        controller: accCtrl,
+                        validator: (e) {
+                          return verifyAccount(e);
+                        },
+                        minLines: 1,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(),
+                          labelStyle: TextStyle(fontSize: textFiledFontSize),
+                          hintStyle: TextStyle(fontSize: textFiledFontSize),
+                          labelText: '账号',
+                          hintText: '请输入手机号/邮箱/用户名',
+                          prefixIcon: const Icon(Icons.account_circle),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderSide: BorderSide(
+                              color: Colors.lightBlue,
+                              width: 2.0,
+                            ),
                           ),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          '用户注册',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                            decoration: TextDecoration.underline,
+                    ),
+
+                    /// 密码输入框
+                    SizedBox(
+                      height: 85,
+                      child: TextFormField(
+                        controller: pwdCtrl,
+                        validator: (e) {
+                          return Utils.detectPwd(e);
+                        },
+                        obscureText: true,
+                        minLines: 1,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(),
+                          labelStyle: TextStyle(fontSize: textFiledFontSize),
+                          hintStyle: TextStyle(fontSize: textFiledFontSize),
+                          labelText: '密码',
+                          hintText: '请输入账号密码',
+                          prefixIcon: const Icon(Icons.lock),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderSide: BorderSide(
+                              color: Colors.lightBlue,
+                              width: 2.0,
+                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-
-                /// 登录按钮
-                MaterialButton(
-                  onPressed: () {
-                    if ((formKey.currentState as FormState).validate()) {
-                      login('http://localhost:8080/users/login');
-                    }
-                  },
-                  padding: const EdgeInsets.all(20),
-                  shape: const CircleBorder(
-                    side: BorderSide(
-                      color: Colors.grey,
-                      width: 2,
                     ),
-                  ),
-                  child: const Text(
-                    '登录',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
+
+                    /// 其他服务
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            '密码找回',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Utils.route(context, const RegisterPage());
+                          },
+                          child: const Text(
+                            '用户注册',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+
+                    /// 登录按钮
+                    Container(
+                      margin: const EdgeInsets.only(top: 20, bottom: 0),
+                      child: MaterialButton(
+                        onPressed: () {
+                          if ((formKey.currentState as FormState).validate()) {
+                            Http().login(loginUrl, encapsulateData());
+                          }
+                        },
+                        padding: const EdgeInsets.all(20),
+                        shape: const CircleBorder(
+                          side: BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
+                        ),
+                        child: const Text(
+                          '登录',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
 
-          /// 分割线
-          Container(
-            margin: EdgeInsets.fromLTRB(marginLeft, 45, marginRight, 0),
-            child: const Divider(
-              height: 2,
+            /// 分割线
+            Container(
+              margin: const EdgeInsets.only(top: 40, bottom: 20),
+              child: const TextDivider('快捷登录'),
             ),
-          ),
 
-          /// 快捷登录
-          Container(
-            margin: EdgeInsets.fromLTRB(marginLeft, 10, marginRight, 5),
-            child: Row(
+            /// 快捷登录
+            Row(
               mainAxisAlignment: spaceBetween,
               children: [
                 GestureDetector(
@@ -437,8 +375,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

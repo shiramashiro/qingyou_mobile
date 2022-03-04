@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/pages/login_page.dart';
+
+import '../utils/utils.dart';
+import 'login_page.dart';
 
 class BootPage extends StatefulWidget {
   const BootPage({Key? key}) : super(key: key);
@@ -19,10 +21,7 @@ class _BootPageState extends State<BootPage> {
 
   void router() {
     timer.cancel();
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => const LoginPage()),
-        (route) => false);
+    Utils.route(context, const LoginPage());
   }
 
   /// 倒计时按钮。
