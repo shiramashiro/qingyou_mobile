@@ -77,7 +77,15 @@ class _LoginPageState extends State<LoginPage> {
     /// 综上所述：
     /// 手机号为 false，用户名为 true，结果返回 false。说明用户正在以用户名的方式进行输入，因此再取反，最终为 true。
     /// 手机号为 true，用户名为 true，结果返回 true，说明用户正在以手机号的方式进行输入，因此再取反，最终为 false。
+    /// 用户名为 true，电子邮箱为 true，结果范围 true，说明正在以电子邮箱的方式进行输入，因此再取反，最终为 false。
     isUname = !(isPhone && RegExp(unameRegExp).hasMatch(e));
+
+    if (isUname && isEmail) {
+      if (RegExp(r"@").hasMatch(e)) {
+        isUname = false;
+        return null;
+      }
+    }
 
     // 当匹配到用户名时，需要做以下几点操作，确保是否为用户名
     if (isUname) {
@@ -117,6 +125,88 @@ class _LoginPageState extends State<LoginPage> {
         return "你输入的用户名格式有误";
       }
     }
+  }
+
+  /// @desc: 验证密码格式是否正确
+  /// @author: shiramashiro
+  /// @date: 2022/3/4
+  String? verifyPassword(String? e) {
+    if (e!.isEmpty) return "密码不能为空";
+
+    String pswRegExp = r"^[0-9A-za-z\-\_\.]{6,16}$";
+
+    bool isCorrect = RegExp(pswRegExp).hasMatch(e);
+
+    if (isCorrect) {
+      return null;
+    } else {
+      return "字母、数字、_-. 长度在6~16位";
+    }
+  }
+
+  /// @desc: 设置 EasyLoading 相关配置
+  /// @author: shiramashiro
+  /// @date: 2022/3/4
+  setEasyLoadingConfig() {
+    EasyLoading.instance
+      ..radius = 20
+      ..maskType = EasyLoadingMaskType.clear
+      ..loadingStyle = EasyLoadingStyle.dark;
+  }
+
+  /// @desc: 判断状态码，并提示
+  /// @author: shiramashiro
+  /// @date: 2022/3/4
+  judgementStatusCode(dynamic data) {
+    if (data['state'] == 5000) {
+      EasyLoading.showToast('未知错误');
+    } else if (data['state'] == 5001) {
+      EasyLoading.showToast('用户不存在');
+    } else if (data['state'] == 5002) {
+      EasyLoading.showToast('密码错误');
+    }
+  }
+
+  /// @desc: 封装表单数据
+  /// @author: shiramashiro
+  /// @date: 2022/3/4
+  User encapsulateData() {
+    User user;
+    if (isUname) {
+      user = User(psw: pwdCtrl.text, uname: accCtrl.text);
+    } else if (isEmail) {
+      user = User(psw: pwdCtrl.text, email: accCtrl.text);
+    } else {
+      user = User(psw: pwdCtrl.text, phone: accCtrl.text);
+    }
+    return user;
+  }
+
+  /// @desc: 登陆方法
+  /// @author: shiramashiro
+  /// @date: 2022/3/4
+  login(String url) {
+    Future res = Dio(BaseOptions()).post(
+      url,
+      data: encapsulateData(),
+    );
+
+    setEasyLoadingConfig();
+    EasyLoading.show(status: '登录中...');
+
+    res.then((value) {
+      EasyLoading.dismiss();
+      judgementStatusCode(jsonDecode(value.toString()));
+    }, onError: (e) {
+      EasyLoading.dismiss();
+      EasyLoading.showToast('未知错误');
+    }).timeout(
+      const Duration(milliseconds: 12000),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        EasyLoading.showToast('请求超时');
+      },
+    );
   }
 
   @override
@@ -176,7 +266,9 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 20),
                   child: TextFormField(
                     controller: pwdCtrl,
-                    validator: (e) {},
+                    validator: (e) {
+                      return verifyPassword(e);
+                    },
                     obscureText: true,
                     minLines: 1,
                     keyboardType: TextInputType.text,
@@ -203,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 /// 其他服务
                 Container(
-                  margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 90),
+                  margin: EdgeInsets.fromLTRB(marginLeft, 0, marginRight, 80),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -237,43 +329,7 @@ class _LoginPageState extends State<LoginPage> {
                 MaterialButton(
                   onPressed: () {
                     if ((formKey.currentState as FormState).validate()) {
-                      User user;
-                      if (isUname) {
-                        user = User(psw: pwdCtrl.text, uname: accCtrl.text);
-                      } else if (isEmail) {
-                        user = User(psw: pwdCtrl.text, email: accCtrl.text);
-                      } else {
-                        user = User(psw: pwdCtrl.text, phone: accCtrl.text);
-                      }
-                      Dio dio = Dio(BaseOptions());
-                      Future res = dio.post(
-                        'http://localhost:8080/users/login',
-                        data: user,
-                      );
-                      EasyLoading.instance
-                        ..radius = 20
-                        ..maskType = EasyLoadingMaskType.clear
-                        ..loadingStyle = EasyLoadingStyle.dark;
-                      EasyLoading.show(status: '登录中...');
-                      res.then((value) {
-                        EasyLoading.dismiss();
-                        var data = jsonDecode(value.toString());
-                        if (data['state'] == 5000) {
-                          EasyLoading.showToast('未知错误');
-                        } else if (data['state'] == 5001) {
-                          EasyLoading.showToast('用户不存在');
-                        } else if (data['state'] == 5002) {
-                          EasyLoading.showToast('密码错误');
-                        }
-                      }, onError: (e) {
-                        EasyLoading.dismiss();
-                      }).timeout(
-                        const Duration(milliseconds: 15000),
-                        onTimeout: () {
-                          EasyLoading.dismiss();
-                          EasyLoading.showToast('请求超时');
-                        },
-                      );
+                      login('http://localhost:8080/users/login');
                     }
                   },
                   padding: const EdgeInsets.all(20),
@@ -297,7 +353,7 @@ class _LoginPageState extends State<LoginPage> {
 
           /// 分割线
           Container(
-            margin: EdgeInsets.fromLTRB(marginLeft, 60, marginRight, 0),
+            margin: EdgeInsets.fromLTRB(marginLeft, 45, marginRight, 0),
             child: const Divider(
               height: 2,
             ),
