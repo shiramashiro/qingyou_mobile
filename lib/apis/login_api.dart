@@ -1,6 +1,7 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/http.dart';
 
+import 'http.dart';
+import 'low_reuse.dart';
 import '../models/user_model.dart';
 
 class LoginApi extends Http {
@@ -8,8 +9,9 @@ class LoginApi extends Http {
   /// @author: shiramashiro
   /// @date: 2022/3/4
   void login(String url, User user) {
-    Future future = createDio().post(url, data: user);
+    Future future = dio.post(url, data: user);
+    print('phone: ${user.phone}, uname: ${user.uname}, email: ${user.email}, password: ${user.psw}');
     EasyLoading.show(status: '登录中...');
-    afterHttpProcess(future);
+    LowReuse().thenSteps(future);
   }
 }

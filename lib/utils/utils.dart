@@ -7,7 +7,7 @@ class RegExpValues {
   static const String email =
       r"^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$";
 
-  static const String uname = r"^[a-zA-Z0-9_-]{4,20}$";
+  static const String uname = r"[a-zA-Z0-9_-]{4,20}";
 
   static const String uname2Phone =
       r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])";

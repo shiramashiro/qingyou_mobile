@@ -10,6 +10,8 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   final Map<String, String> _bottomBarItems = {
     'home': '首页',
+    'dynamic': '动态',
+    'shopping': '轻游购',
     'user': '我的',
   };
 
@@ -19,13 +21,13 @@ class _RootPageState extends State<RootPage> {
     return BottomNavigationBarItem(
       icon: Image.asset(
         'assets/icons/$iconName.png',
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
       ),
       activeIcon: Image.asset(
         'assets/icons/$iconName.png',
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
       ),
       label: itemName,
     );
@@ -35,6 +37,9 @@ class _RootPageState extends State<RootPage> {
     List<BottomNavigationBarItem> items = [];
     _bottomBarItems.forEach((key, value) {
       items.add(_createBottomBarItem(key, value));
+    });
+    items.forEach((element) {
+      print(element);
     });
     return items;
   }
@@ -70,6 +75,7 @@ class _RootPageState extends State<RootPage> {
       ),
       body: Text('root page'),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: _setCurrentIndex,
         items: _createBottomBarItems(),
         currentIndex: _currentIndex,
