@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class CircleButton extends StatelessWidget {
   final Function onTap;
+  final String text;
 
-  const CircleButton({Key? key, required this.onTap}) : super(key: key);
+  const CircleButton({
+    Key? key,
+    required this.onTap,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +21,9 @@ class CircleButton extends StatelessWidget {
         ),
       ),
       onPressed: () => onTap(),
-      child: const Text(
-        '登录',
-        style: TextStyle(
+      child: Text(
+        text,
+        style: const TextStyle(
           fontSize: 14,
           color: Colors.black54,
         ),

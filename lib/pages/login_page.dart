@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/apis/login_api.dart';
+import 'package:qingyuo_mobile/pages/register_page.dart';
 import 'package:qingyuo_mobile/service/login_service.dart';
 
 import '../components/text_divider.dart';
@@ -77,9 +78,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget _createTextButton({
     required String text,
     double fontSize = 14,
+    required Function onTap,
   }) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        onTap();
+      },
       child: Text(
         text,
         style: TextStyle(
@@ -187,13 +191,22 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: spaceBetween,
                       children: [
-                        _createTextButton(text: '密码找回'),
-                        _createTextButton(text: '用户注册'),
+                        _createTextButton(
+                          text: '密码找回',
+                          onTap: () {},
+                        ),
+                        _createTextButton(
+                          text: '用户注册',
+                          onTap: () {
+                            Utils.route(context, const RegisterPage());
+                          },
+                        ),
                       ],
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 20, bottom: 0),
                       child: CircleButton(
+                        text: '登录',
                         onTap: () {
                           if ((formKey.currentState as FormState).validate()) {
                             api.login(
