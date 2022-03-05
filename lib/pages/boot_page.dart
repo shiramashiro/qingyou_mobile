@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
-import 'login_page.dart';
+import 'root_page.dart';
 
 class BootPage extends StatefulWidget {
   const BootPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _BootPageState extends State<BootPage> {
 
   void router() {
     timer.cancel();
-    Utils.route(context, const LoginPage());
+    Utils.route(context, const RootPage());
   }
 
   /// 倒计时按钮。

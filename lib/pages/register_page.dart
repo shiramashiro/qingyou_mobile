@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/apis/register_api.dart';
+import 'package:qingyuo_mobile/service/register_service.dart';
 
+import '../apis/http.dart';
 import '../components/text_divider.dart';
-import '../http/http.dart';
-import '../models/user.dart';
+import '../models/user_model.dart';
 import '../utils/utils.dart';
 import 'login_page.dart';
 
@@ -23,25 +25,26 @@ class _RegisterPageState extends State<RegisterPage> {
   GlobalKey textFormFiledKey = GlobalKey();
 
   double textFiledFontSize = 14;
-  String httpUrl = "http://localhost:8080/users/reg";
+  String url = "http://localhost:8080/users/reg";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
-          title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  Utils.route(context, const LoginPage());
-                },
-                icon: const Icon(Icons.arrow_back),
-              ),
-              const Text('注册'),
-            ],
-          )),
+        backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () {
+                Utils.route(context, const LoginPage());
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
+            const Text('注册'),
+          ],
+        ),
+      ),
       body: Form(
         key: formKey,
         child: Container(
@@ -161,12 +164,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: MaterialButton(
                   onPressed: () {
                     if ((formKey.currentState as FormState).validate()) {
-                      Http().register(
-                        httpUrl,
-                        User(
-                            uname: unameCtrl.text,
-                            phone: phoneCtrl.text,
-                            psw: rePasswordCtrl.text),
+                      RegisterApi().register(
+                        url,
+                        RegisterService().encapsulateData(
+                          unameCtrl.text,
+                          phoneCtrl.text,
+                          rePasswordCtrl.text,
+                        ),
                       );
                     }
                   },
