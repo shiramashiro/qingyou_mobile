@@ -1,27 +1,47 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../models/user.dart';
-import '../utils/utils.dart';
 
 class Http {
   BaseOptions? baseOptions;
 
+  static const Map<int, String> codes = {
+    2000: '注册成功',
+    4000: '用户已存在',
+    5000: '未知错误',
+    5001: '用户不存在',
+    5002: '密码错误',
+    6000: '请求超时'
+  };
+
   Http({this.baseOptions});
 
+  static void codeToast(dynamic json) {
+
+    var code = jsonDecode(json.toString())['state'];
+    codes.forEach((key, value) {
+      if (code == key) {
+        EasyLoading.showToast(value);
+        return;
+      }
+    });
+  }
 
   void after(Future future) {
     future.then((value) {
       EasyLoading.dismiss();
-      Utils.codeToast(value);
+      codeToast(value);
     }, onError: (e) {
       EasyLoading.dismiss();
-      EasyLoading.showToast('未知错误');
+      EasyLoading.showToast('${codes[5000]}');
     }).timeout(
       const Duration(milliseconds: 12000),
       onTimeout: () {
         EasyLoading.dismiss();
-        EasyLoading.showToast('请求超时');
+        EasyLoading.showToast('${codes[6000]}');
       },
     );
   }

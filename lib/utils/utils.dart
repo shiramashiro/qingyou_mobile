@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class RegExpValues {
   static const String phone =
@@ -33,22 +30,6 @@ class Utils {
 
   static bool match(String value, String regexp) {
     return RegExp(regexp).hasMatch(value);
-  }
-
-  static void codeToast(dynamic code) {
-    var state = jsonDecode(code.toString())['state'];
-
-    if (state == 5000) {
-      EasyLoading.showToast('未知错误');
-    } else if (state == 5001) {
-      EasyLoading.showToast('用户不存在');
-    } else if (state == 5002) {
-      EasyLoading.showToast('密码错误');
-    } else if (state == 2000) {
-      EasyLoading.showToast('注册成功');
-    } else if (state == 4000) {
-      EasyLoading.showToast('用户已存在');
-    }
   }
 
   static String? detectPwd(String? e) {

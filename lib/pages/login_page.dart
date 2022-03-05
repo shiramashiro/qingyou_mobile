@@ -232,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
 
-                    /// 其他服务
+                    /// 密码找回和用户注册
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -304,6 +304,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: spaceBetween,
               children: [
                 GestureDetector(
+                  onTap: () {},
                   child: SizedBox(
                     width: 55,
                     height: 55,
@@ -327,6 +328,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: () {},
                   child: SizedBox(
                     width: 55,
                     height: 55,
