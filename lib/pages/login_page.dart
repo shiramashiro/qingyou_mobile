@@ -98,11 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           if ((formKey.currentState as FormState).validate()) {
                             api.login(
-                              'http://localhost:8080/users/login',
-                              service.encapsulateData(
-                                pwdCtrl,
-                                accCtrl,
-                              ),
+                              service.encapsulateData(pwdCtrl, accCtrl),
                             );
                           }
                         },

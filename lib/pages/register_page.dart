@@ -89,7 +89,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   onTap: () {
                     if ((formKey.currentState as FormState).validate()) {
                       api.register(
-                        "http://localhost:8080/users/reg",
                         service.encapsulateData(
                             unameCtrl.text, phoneCtrl.text, rePasswordCtrl.text),
                       );
