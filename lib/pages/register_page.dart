@@ -82,7 +82,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 hint: '再次输入密码以确保密码一致',
                 icon: Icons.lock_open,
               ),
-
               Container(
                 margin: const EdgeInsets.only(top: 35),
                 child: CircleButton(
@@ -92,10 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       api.register(
                         "http://localhost:8080/users/reg",
                         service.encapsulateData(
-                          unameCtrl.text,
-                          phoneCtrl.text,
-                          rePasswordCtrl.text,
-                        ),
+                            unameCtrl.text, phoneCtrl.text, rePasswordCtrl.text),
                       );
                     }
                   },
@@ -105,15 +101,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: const EdgeInsets.only(top: 45),
                 child: const TextDivider('快捷注册'),
               ),
-
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    TextIcon(imagePath: "assets/icons/alipay.png", text: "支付宝"),
-                    TextIcon(imagePath: "assets/icons/wechat.png", text: "微信"),
-                    TextIcon(imagePath: "assets/icons/qq.png", text: "QQ"),
+                    TextIcon(iconPath: "assets/icons/alipay.png", text: "支付宝"),
+                    TextIcon(iconPath: "assets/icons/wechat.png", text: "微信"),
+                    TextIcon(iconPath: "assets/icons/qq.png", text: "QQ"),
                   ],
                 ),
               ),

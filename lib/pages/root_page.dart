@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:qingyuo_mobile/components/avatar.dart';
+import 'package:qingyuo_mobile/components/clickable_icon.dart';
+import 'package:qingyuo_mobile/components/icon_in_input.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -45,8 +47,19 @@ class _RootPageState extends State<RootPage> {
 
   Widget _createTitle() {
     return Row(
-      children: const [
-        Avatar(url: "assets/images/95893409_p0.jpg"),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Avatar(url: "assets/images/95893409_p0.jpg", size: 40),
+        const IconInInput(
+          hintText: '输入你想要搜索的内容',
+          contentStyle: TextStyle(fontSize: 12),
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+          ),
+        ),
+        ClickableIcon(onTap: () {}, icon: Icons.email)
       ],
     );
   }

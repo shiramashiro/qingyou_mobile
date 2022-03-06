@@ -31,6 +31,8 @@ class Detection {
   static String? detectPwd(String? e) {
     if (e!.isEmpty) return "密码不能为空";
 
+    if (e.length < 4) return "密码长度至少4位字符";
+
     if (Detection.match(e, RegExpValues.password)) {
       return null;
     } else {
@@ -39,7 +41,9 @@ class Detection {
   }
 
   static String? detectUname(String? e) {
-    if (e!.isEmpty) return "密码不能为空";
+    if (e!.isEmpty) return "用户名不能为空";
+
+    if (e.length < 4) return "用户名长度至少4位字符";
 
     if (Detection.match(e, RegExpValues.uname)) {
       return null;

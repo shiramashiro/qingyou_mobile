@@ -12,12 +12,12 @@ class LowReuse extends Http {
       httpThen(value);
     }, onError: (e) {
       EasyLoading.dismiss();
-      EasyLoading.showToast('${codes[5000]}');
+      EasyLoading.showToast('未知错误');
     }).timeout(
       const Duration(milliseconds: 12000),
       onTimeout: () {
         EasyLoading.dismiss();
-        EasyLoading.showToast('${codes[6000]}');
+        EasyLoading.showToast('连接超时');
       },
     );
   }

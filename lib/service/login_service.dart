@@ -50,7 +50,11 @@ class LoginService {
           return DetectValues.phone;
         }
       } else {
-        return null;
+        if (e.length < 4) {
+          return "账号长度至少4位字符";
+        } else {
+          return null;
+        }
       }
     } else if (isUname == true && isEmail == true && isPhone == false) {
       if (RegExp(r'@').hasMatch(e)) {

@@ -5,13 +5,15 @@ class TextIcon extends StatelessWidget {
   final double iconSize;
   final double fontSize;
   final String text;
-  final String imagePath;
+  final String? iconPath;
+  final IconData? icon;
   final Color textColor;
   final Function? onTap;
 
   const TextIcon({
     Key? key,
-    required this.imagePath,
+    this.iconPath,
+    this.icon,
     this.holeSize = 55,
     this.iconSize = 30,
     required this.text,
@@ -23,18 +25,20 @@ class TextIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap!(),
+      onTap: () => onTap,
       child: SizedBox(
         width: holeSize,
         height: holeSize,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(
-              image: AssetImage(imagePath),
-              width: iconSize,
-              height: iconSize,
-            ),
+            iconPath == null
+                ? Icon(icon)
+                : Image(
+                    image: AssetImage(iconPath!),
+                    width: iconSize,
+                    height: iconSize,
+                  ),
             Text(
               text,
               style: TextStyle(
