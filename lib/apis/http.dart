@@ -32,7 +32,6 @@ class Http {
   /// @author: shiramashiro
   /// @date: 2022/3/5
   void httpThen(dynamic json) {
-    print(jsonDecode(json.toString()));
     int fromJsonState = jsonDecode(json.toString())['state'];
     _codes.forEach((definedStateCode, definedStateValue) {
       if (fromJsonState == definedStateCode) {

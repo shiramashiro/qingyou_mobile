@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/apis/register_api.dart';
-import 'package:qingyuo_mobile/components/circle_button.dart';
-import 'package:qingyuo_mobile/components/form_input.dart';
-import 'package:qingyuo_mobile/service/register_service.dart';
 
-import '../apis/http.dart';
+import '../components/circle_button.dart';
+import '../components/form_input.dart';
+import '../components/text_icon.dart';
 import '../components/text_divider.dart';
-import '../models/user_model.dart';
+import '../service/register_service.dart';
+import '../apis/register_api.dart';
 import '../utils/utils.dart';
 import 'login_page.dart';
 
@@ -28,35 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   RegisterService service = RegisterService();
   RegisterApi api = RegisterApi();
-
-  Widget _createFastLogInButton({
-    required String text,
-    required String imagePath,
-  }) {
-    return GestureDetector(
-      child: SizedBox(
-        width: 55,
-        height: 55,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage(imagePath),
-              width: 30,
-              height: 30,
-            ),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,12 +110,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: const EdgeInsets.only(top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _createFastLogInButton(
-                        text: '支付宝', imagePath: 'assets/icons/alipay.png'),
-                    _createFastLogInButton(
-                        text: '微信', imagePath: 'assets/icons/wechat.png'),
-                    _createFastLogInButton(text: 'QQ', imagePath: 'assets/icons/qq.png'),
+                  children: const [
+                    TextIcon(imagePath: "assets/icons/alipay.png", text: "支付宝"),
+                    TextIcon(imagePath: "assets/icons/wechat.png", text: "微信"),
+                    TextIcon(imagePath: "assets/icons/qq.png", text: "QQ"),
                   ],
                 ),
               ),

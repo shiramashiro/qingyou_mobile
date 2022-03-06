@@ -10,7 +10,6 @@ class LoginApi extends Http {
   /// @date: 2022/3/4
   void login(String url, User user) {
     Future future = dio.post(url, data: user);
-    print('phone: ${user.phone}, uname: ${user.uname}, email: ${user.email}, password: ${user.psw}');
     EasyLoading.show(status: '登录中...');
     LowReuse().thenSteps(future);
   }

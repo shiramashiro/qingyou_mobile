@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../components/avatar.dart';
+
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
 
@@ -38,24 +40,13 @@ class _RootPageState extends State<RootPage> {
     _bottomBarItems.forEach((key, value) {
       items.add(_createBottomBarItem(key, value));
     });
-    items.forEach((element) {
-      print(element);
-    });
     return items;
   }
 
-  Widget createTitle() {
+  Widget _createTitle() {
     return Row(
       children: const [
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: CircleAvatar(
-            backgroundImage: AssetImage(
-              'assets/images/95893409_p0.jpg',
-            ),
-          ),
-        )
+        Avatar(url: "assets/images/95893409_p0.jpg"),
       ],
     );
   }
@@ -71,9 +62,9 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
-        title: createTitle(),
+        title: _createTitle(),
       ),
-      body: Text('root page'),
+      body: const Text('root page'),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: _setCurrentIndex,

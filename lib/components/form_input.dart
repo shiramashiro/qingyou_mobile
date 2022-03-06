@@ -26,9 +26,7 @@ class FormInput extends StatelessWidget {
       height: 85,
       child: TextFormField(
         controller: controller,
-        validator: (e) {
-          return validator(e);
-        },
+        validator: (e) => validator(e),
         obscureText: obscure,
         minLines: 1,
         decoration: InputDecoration(

@@ -1,8 +1,8 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/http.dart';
 
 import '../models/user_model.dart';
 import 'low_reuse.dart';
+import 'http.dart';
 
 class RegisterApi extends Http {
   /// @desc: 注册方法
