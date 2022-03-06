@@ -1,4 +1,4 @@
-import '../models/user_model.dart';
+import 'package:qingyuo_mobile/models/user_model.dart';
 
 class RegisterService {
   User encapsulateData(String uname, String phone, String psw) {

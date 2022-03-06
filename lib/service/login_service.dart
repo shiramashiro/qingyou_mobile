@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
-
-import '../models/user_model.dart';
-import '../utils/utils.dart';
+import 'package:qingyuo_mobile/models/user_model.dart';
+import 'package:qingyuo_mobile/utils/detection.dart';
 
 class LoginService {
   bool isUname = false;
@@ -30,8 +29,8 @@ class LoginService {
     /// 如果账号未输入，下面的步骤全部终止进行。
     if (e!.isEmpty) return "账号不能为空";
 
-    isPhone = Utils.match(e, RegExpValues.phone);
-    isEmail = Utils.match(e, RegExpValues.email);
+    isPhone = Detection.match(e, RegExpValues.phone);
+    isEmail = Detection.match(e, RegExpValues.email);
 
     /// 用户名的正则表达式中包含了数字，所以通常情况下，用户名与手机号的正则都匹配。
     ///
@@ -40,12 +39,12 @@ class LoginService {
     ///
     /// 手机号为 false，用户名为 true，结果返回 false。说明用户正在以用户名的方式进行输入，因此再取反，最终为 true。
     /// 手机号为 true，用户名为 true，结果返回 true，说明用户正在以手机号的方式进行输入，因此再取反，最终为 false。
-    isUname = !(isPhone && Utils.match(e, RegExpValues.uname));
+    isUname = !(isPhone && Detection.match(e, RegExpValues.uname));
 
     if (isUname == true && isEmail == false && isPhone == false) {
-      if (Utils.match(e, RegExpValues.uname2Phone)) {
+      if (Detection.match(e, RegExpValues.uname2Phone)) {
         isUname = false;
-        if (Utils.match(e, RegExpValues.phone)) {
+        if (Detection.match(e, RegExpValues.phone)) {
           return null;
         } else {
           return DetectValues.phone;
@@ -56,7 +55,7 @@ class LoginService {
     } else if (isUname == true && isEmail == true && isPhone == false) {
       if (RegExp(r'@').hasMatch(e)) {
         isUname = false;
-        if (Utils.match(e, RegExpValues.email)) {
+        if (Detection.match(e, RegExpValues.email)) {
           return null;
         } else {
           return DetectValues.email;

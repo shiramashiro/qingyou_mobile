@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-
+/// 正则表达式值，这里保存项目中需要用到的各种正则表达式。
+/// 例如，手机号正则、用户名正则。
 class RegExpValues {
   static const String phone =
       r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$";
@@ -15,19 +15,15 @@ class RegExpValues {
   static const String password = r"^[0-9A-za-z\-\_\.]{6,16}$";
 }
 
+/// 保存着各种提示消息，比如，手机号的格式错误、电子邮箱的格式错误等。
 class DetectValues {
   static const String pwd = "字母、数字、_-. 长度在6~16位";
   static const String uname = "字母、数字、_- 长度在4~20位";
-  static const String email = "xxxx@xx.xx";
-  static const String phone = "11位数字";
+  static const String email = "电子邮箱的格式是 xxxx@xx.xx";
+  static const String phone = "手机号是11位数字";
 }
 
-class Utils {
-  static void route(dynamic context, dynamic widget) {
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (BuildContext context) => widget), (route) => false);
-  }
-
+class Detection {
   static bool match(String value, String regexp) {
     return RegExp(regexp).hasMatch(value);
   }
@@ -35,7 +31,7 @@ class Utils {
   static String? detectPwd(String? e) {
     if (e!.isEmpty) return "密码不能为空";
 
-    if (Utils.match(e, RegExpValues.password)) {
+    if (Detection.match(e, RegExpValues.password)) {
       return null;
     } else {
       return "格式：${DetectValues.pwd}";
@@ -45,7 +41,7 @@ class Utils {
   static String? detectUname(String? e) {
     if (e!.isEmpty) return "密码不能为空";
 
-    if (Utils.match(e, RegExpValues.uname)) {
+    if (Detection.match(e, RegExpValues.uname)) {
       return null;
     } else {
       return "格式：${DetectValues.uname}";
@@ -55,7 +51,7 @@ class Utils {
   static String? detectEmail(String? e) {
     if (e!.isEmpty) return "邮箱不能为空";
 
-    if (Utils.match(e, RegExpValues.email)) {
+    if (Detection.match(e, RegExpValues.email)) {
       return null;
     } else {
       return "格式：${DetectValues.email}";
@@ -65,7 +61,7 @@ class Utils {
   static String? detectPhone(String? e) {
     if (e!.isEmpty) return "手机号不能为空";
 
-    if (Utils.match(e, RegExpValues.phone)) {
+    if (Detection.match(e, RegExpValues.phone)) {
       return null;
     } else {
       return "格式：${DetectValues.phone}";
@@ -76,7 +72,7 @@ class Utils {
     if (rePwd != e) {
       return "两次密码不一致";
     } else {
-      return Utils.detectPwd(e);
+      return Detection.detectPwd(e);
     }
   }
 }

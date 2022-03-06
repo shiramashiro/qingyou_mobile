@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/avatar.dart';
+import 'package:qingyuo_mobile/components/avatar.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);

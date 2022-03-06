@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import '../components/avatar.dart';
-import '../components/form_input.dart';
-import '../components/text_icon.dart';
-import '../components/underline_text_button.dart';
-import '../components/text_divider.dart';
-import '../components/circle_button.dart';
-import '../apis/login_api.dart';
-import '../service/login_service.dart';
-import '../utils/utils.dart';
+import 'package:qingyuo_mobile/utils/roadmap.dart';
+import 'package:qingyuo_mobile/components/avatar.dart';
+import 'package:qingyuo_mobile/components/form_input.dart';
+import 'package:qingyuo_mobile/components/text_icon.dart';
+import 'package:qingyuo_mobile/components/underline_text_button.dart';
+import 'package:qingyuo_mobile/components/text_divider.dart';
+import 'package:qingyuo_mobile/components/circle_button.dart';
+import 'package:qingyuo_mobile/apis/login_api.dart';
+import 'package:qingyuo_mobile/service/login_service.dart';
+import 'package:qingyuo_mobile/utils/detection.dart';
 import 'register_page.dart';
 import 'root_page.dart';
 
@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             IconButton(
               onPressed: () {
-                Utils.route(context, const RootPage());
+                Roadmap.push(context, const RootPage());
               },
               icon: const Icon(Icons.arrow_back),
             ),
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     FormInput(
                       controller: pwdCtrl,
                       obscure: true,
-                      validator: (e) => Utils.detectPwd(e),
+                      validator: (e) => Detection.detectPwd(e),
                       label: '密码',
                       hint: '请输入账号密码',
                       icon: Icons.lock,
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         UnderlineTextButton(text: '密码找回', onTap: () {}),
                         UnderlineTextButton(
                           text: '用户注册',
-                          onTap: () => Utils.route(context, const RegisterPage()),
+                          onTap: () => Roadmap.push(context, const RegisterPage()),
                         ),
                       ],
                     ),
