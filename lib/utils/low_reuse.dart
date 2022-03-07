@@ -1,6 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import 'http.dart';
+import 'package:qingyuo_mobile/apis/http.dart';
 
 class LowReuse extends Http {
   /// @desc: 针对于登陆与注册，处理其返回的状态码，并提示相应的消息给用户

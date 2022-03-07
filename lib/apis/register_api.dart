@@ -1,12 +1,12 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import '../models/user_model.dart';
-import 'low_reuse.dart';
-import 'http.dart';
+import 'package:qingyuo_mobile/models/user_model.dart';
+import 'package:qingyuo_mobile/utils/low_reuse.dart';
+import 'package:qingyuo_mobile/apis/http.dart';
 
 class RegisterApi extends Http {
 
-  static const String _registerUrl = "http://localhost:8080/users/reg";
+  static const String _registerUrl = "http://localhost:8080/users/register";
 
   /// @desc: 注册方法
   /// @author: shiramashiro

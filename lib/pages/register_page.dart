@@ -7,7 +7,7 @@ import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/service/register_service.dart';
 import 'package:qingyuo_mobile/apis/register_api.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
-import 'login_page.dart';
+import 'package:qingyuo_mobile/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
-import 'package:qingyuo_mobile/pages/root_page.dart';
+import 'package:qingyuo_mobile/root_page.dart';
 
 void main() {
   runApp(const MyApp());

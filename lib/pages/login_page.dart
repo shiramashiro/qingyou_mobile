@@ -10,8 +10,8 @@ import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/apis/login_api.dart';
 import 'package:qingyuo_mobile/service/login_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
-import 'register_page.dart';
-import 'root_page.dart';
+import 'package:qingyuo_mobile/pages/register_page.dart';
+import 'package:qingyuo_mobile/root_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

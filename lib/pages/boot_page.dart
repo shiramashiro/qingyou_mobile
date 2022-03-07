@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:flutter/material.dart';
 
-import 'root_page.dart';
+import 'package:qingyuo_mobile/root_page.dart';
 
 class BootPage extends StatefulWidget {
   const BootPage({Key? key}) : super(key: key);

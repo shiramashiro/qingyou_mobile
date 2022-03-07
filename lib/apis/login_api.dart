@@ -1,8 +1,8 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'http.dart';
-import 'low_reuse.dart';
-import '../models/user_model.dart';
+import 'package:qingyuo_mobile/utils/low_reuse.dart';
+import 'package:qingyuo_mobile/models/user_model.dart';
 
 class LoginApi extends Http {
   static const String _loginUrl = "http://localhost:8080/users/login";

@@ -9,47 +9,14 @@ import 'package:qingyuo_mobile/slices/root_page/recommend_slice.dart';
 import 'package:qingyuo_mobile/slices/root_page/sight_slice.dart';
 import 'package:qingyuo_mobile/slices/root_page/tech_slice.dart';
 
-class RootPage extends StatefulWidget {
-  const RootPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<RootPage> createState() => _RootPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _RootPageState extends State<RootPage> {
-  final Map<String, String> _bottomBarItems = {
-    'home': '首页',
-    'dynamic': '动态',
-    'shopping': '轻游购',
-    'user': '我的',
-  };
-
-  int _currentIndex = 0;
-
-  BottomNavigationBarItem _createBottomBarItem(String iconName, String itemName) {
-    return BottomNavigationBarItem(
-      icon: Image.asset(
-        'assets/icons/$iconName.png',
-        width: 25,
-        height: 25,
-      ),
-      activeIcon: Image.asset(
-        'assets/icons/$iconName.png',
-        width: 25,
-        height: 25,
-      ),
-      label: itemName,
-    );
-  }
-
-  List<BottomNavigationBarItem> _createBottomBarItems() {
-    List<BottomNavigationBarItem> items = [];
-    _bottomBarItems.forEach((key, value) {
-      items.add(_createBottomBarItem(key, value));
-    });
-    return items;
-  }
-
+class _HomePageState extends State<HomePage> {
   Widget _createTitle() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,12 +35,6 @@ class _RootPageState extends State<RootPage> {
         ClickableIcon(onTap: () {}, icon: Icons.email)
       ],
     );
-  }
-
-  _setCurrentIndex(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   @override
@@ -98,12 +59,6 @@ class _RootPageState extends State<RootPage> {
             SightSlice(),
             TechSlice(),
           ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: _setCurrentIndex,
-          items: _createBottomBarItems(),
-          currentIndex: _currentIndex,
         ),
       ),
     );
