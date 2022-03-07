@@ -42,51 +42,49 @@ class IconInInput extends StatelessWidget {
         height: height,
         width: width,
         color: Colors.white,
-        child: Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: height - 10,
-                width: height - 10,
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: height - 10,
-                ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: height - 10,
+              width: height - 10,
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: height - 10,
               ),
-              SizedBox(
-                height: height,
-                width: width - 20,
-                child: TextField(
-                  minLines: 1,
-                  style: contentStyle,
-                  decoration: InputDecoration(
-                    hintText: hintText,
-                    hintStyle: hintStyle,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(radius)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(radius)),
-                      borderSide: BorderSide(color: borderColor, width: borderHeight),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(radius)),
-                      borderSide: BorderSide(color: borderColor, width: borderHeight),
-                    ),
-                    contentPadding: EdgeInsets.only(
-                      left: leftPadding,
-                      right: rightPadding,
-                      top: tbPadding,
-                      bottom: tbPadding,
-                    ),
+            ),
+            SizedBox(
+              height: height,
+              width: width - 20,
+              child: TextField(
+                minLines: 1,
+                style: contentStyle,
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: hintStyle,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(radius)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(radius)),
+                    borderSide: BorderSide(color: borderColor, width: borderHeight),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(radius)),
+                    borderSide: BorderSide(color: borderColor, width: borderHeight),
+                  ),
+                  contentPadding: EdgeInsets.only(
+                    left: leftPadding,
+                    right: rightPadding,
+                    top: tbPadding,
+                    bottom: tbPadding,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

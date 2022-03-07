@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 import 'package:qingyuo_mobile/components/avatar.dart';
@@ -22,7 +23,10 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Avatar(url: "assets/images/95893409_p0.jpg", size: 40),
+        const Avatar(
+          url: "assets/images/95893409_p0.jpg",
+          size: 40,
+        ),
         const IconInInput(
           hintText: '输入你想要搜索的内容',
           contentStyle: TextStyle(fontSize: 12),
@@ -35,6 +39,11 @@ class _HomePageState extends State<HomePage> {
         ClickableIcon(onTap: () {}, icon: Icons.email)
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

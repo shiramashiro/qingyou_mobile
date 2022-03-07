@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 import 'package:qingyuo_mobile/pages/home_page.dart';
 import 'package:qingyuo_mobile/pages/dynamic_page.dart';
 import 'package:qingyuo_mobile/pages/shopping_page.dart';
@@ -18,13 +19,6 @@ class _RootPageState extends State<RootPage> {
     'shopping': '轻游购',
     'user': '我的',
   };
-
-  final List<Widget> _pages = const [
-    HomePage(),
-    DynamicPage(),
-    ShoppingPage(),
-    UserPage(),
-  ];
 
   int _currentIndex = 0;
 
@@ -64,7 +58,15 @@ class _RootPageState extends State<RootPage> {
       initialIndex: 1,
       length: 5,
       child: Scaffold(
-        body: _pages[_currentIndex],
+        body: ProsteIndexedStack(
+          index: _currentIndex,
+          children: [
+            IndexedStackChild(child: const HomePage(), preload: true),
+            IndexedStackChild(child: const DynamicPage()),
+            IndexedStackChild(child: const ShoppingPage()),
+            IndexedStackChild(child: const UserPage()),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           onTap: _setCurrentIndex,
