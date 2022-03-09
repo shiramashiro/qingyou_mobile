@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             IconButton(
               onPressed: () {
-                Roadmap.push(context, const LoginPage());
+                Roadmap.pushAndRemoveUntil(context, const LoginPage());
               },
               icon: const Icon(Icons.arrow_back),
             ),

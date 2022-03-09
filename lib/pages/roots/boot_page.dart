@@ -12,12 +12,12 @@ class BootPage extends StatefulWidget {
 }
 
 class _BootPageState extends State<BootPage> {
-  int currentTime = 1;
+  int currentTime = 6;
   late Timer timer;
 
   void router() {
     timer.cancel();
-    Roadmap.push(context, const RootPage());
+    Roadmap.pushAndRemoveUntil(context, const RootPage());
   }
 
   Widget countdownButton(

@@ -17,7 +17,9 @@ class UnderlineTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => onTap,
+      onPressed: () {
+        onTap();
+      },
       child: Text(
         text,
         style: TextStyle(

@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             IconButton(
               onPressed: () {
-                Roadmap.push(context, const RootPage());
+                Roadmap.pushAndRemoveUntil(context, const RootPage());
               },
               icon: const Icon(Icons.arrow_back),
             ),
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         UnderlineTextButton(text: '密码找回', onTap: () {}),
                         UnderlineTextButton(
                           text: '用户注册',
-                          onTap: () => Roadmap.push(context, const RegisterPage()),
+                          onTap: () => Roadmap.pushAndRemoveUntil(context, const RegisterPage()),
                         ),
                       ],
                     ),

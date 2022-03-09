@@ -1,14 +1,15 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/clickable_icon.dart';
 import 'package:qingyuo_mobile/components/icon_in_input.dart';
-import 'package:qingyuo_mobile/slices/root_page/hotpost_slice.dart';
-import 'package:qingyuo_mobile/slices/root_page/hotvideo_slice.dart';
-import 'package:qingyuo_mobile/slices/root_page/recommend_slice.dart';
-import 'package:qingyuo_mobile/slices/root_page/sight_slice.dart';
-import 'package:qingyuo_mobile/slices/root_page/tech_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/hotpost_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/hotvideo_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/recommend_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/sight_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/tech_slice.dart';
+import 'package:qingyuo_mobile/slices/user_page/user_center_slice.dart';
+import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,9 +24,12 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Avatar(
+        Avatar(
           url: "assets/images/95893409_p0.jpg",
           size: 40,
+          onTap: () {
+            Roadmap.push(context, const UserCenterSlice());
+          },
         ),
         const IconInInput(
           hintText: '输入你想要搜索的内容',

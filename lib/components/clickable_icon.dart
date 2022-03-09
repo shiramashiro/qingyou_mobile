@@ -17,7 +17,7 @@ class ClickableIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: () => onTap(),
       child: SizedBox(
         width: holeSize,
         height: holeSize,
