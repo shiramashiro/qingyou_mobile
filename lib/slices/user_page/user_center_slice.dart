@@ -29,18 +29,26 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
           ActionableListTemplate(
             label: '昵称',
             field: 'uname',
+            onTap: () {},
+            created: (e) => Text(e),
           ),
           ActionableListTemplate(
             label: '性别',
             field: 'sex',
+            onTap: () {},
+            created: (e) => Text(e),
           ),
           ActionableListTemplate(
             label: '个性签名',
             field: 'signature',
+            onTap: () {},
+            created: (e) => Text(e),
           ),
           ActionableListTemplate(
             label: 'UID',
             field: 'uid',
+            onTap: () {},
+            created: (e) => Text(e),
           )
         ],
       ),
