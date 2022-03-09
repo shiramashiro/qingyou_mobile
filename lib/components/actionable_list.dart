@@ -1,47 +1,44 @@
 import 'package:flutter/material.dart';
 
-class MultifunctionalListData {
+class ActionableListTemplate {
   final String label;
-  final Widget? content;
   final IconData icon;
   final Function? onTap;
-  final String fieldName;
+  final String field;
 
-  MultifunctionalListData({
+  ActionableListTemplate({
     required this.label,
-    required this.fieldName,
-    this.content,
+    required this.field,
     this.icon = Icons.arrow_forward_ios,
     this.onTap,
   });
 }
 
-class MultifunctionalList extends StatefulWidget {
+class ActionableList extends StatefulWidget {
   final Map<dynamic, dynamic> data;
-  final List<MultifunctionalListData> items;
+  final List<ActionableListTemplate> template;
   final double tbMargin;
   final double lrMargin;
   final Color labelColor;
 
-  const MultifunctionalList({
+  const ActionableList({
     Key? key,
     required this.data,
-    required this.items,
+    required this.template,
     this.tbMargin = 10,
     this.lrMargin = 10,
     this.labelColor = Colors.black,
   }) : super(key: key);
 
   @override
-  State<MultifunctionalList> createState() => _MultifunctionalListState();
+  State<ActionableList> createState() => _ActionableListState();
 }
 
-class _MultifunctionalListState extends State<MultifunctionalList> {
+class _ActionableListState extends State<ActionableList> {
   Widget _createItems(
     String label,
-    Widget? content,
+    String filed,
     IconData icon,
-    String filedName,
     Function? onTap,
   ) {
     return InkWell(
@@ -49,8 +46,8 @@ class _MultifunctionalListState extends State<MultifunctionalList> {
       child: Padding(
         padding: EdgeInsets.only(
           left: widget.lrMargin,
-          right: widget.lrMargin,
           top: widget.tbMargin,
+          right: widget.lrMargin,
           bottom: widget.tbMargin,
         ),
         child: Row(
@@ -62,7 +59,7 @@ class _MultifunctionalListState extends State<MultifunctionalList> {
                 color: widget.labelColor,
               ),
             ),
-            Expanded(child: Text(filedName)),
+            Expanded(child: Text(filed)),
             Icon(icon),
           ],
         ),
@@ -71,19 +68,18 @@ class _MultifunctionalListState extends State<MultifunctionalList> {
   }
 
   List<Widget> _createList() {
-    List<Widget> items = [];
+    List<Widget> list = [];
     for (int i = 0; i < widget.data.length; i++) {
-      items.add(
+      list.add(
         _createItems(
-          widget.items[i].label,
-          widget.items[i].content,
-          widget.items[i].icon,
-          widget.data[widget.items[i].fieldName],
-          widget.items[i].onTap,
+          widget.template[i].label,
+          widget.data[widget.template[i].field],
+          widget.template[i].icon,
+          widget.template[i].onTap,
         ),
       );
     }
-    return items;
+    return list;
   }
 
   @override
