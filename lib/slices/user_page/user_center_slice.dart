@@ -9,6 +9,25 @@ class UserCenterSlice extends StatefulWidget {
 }
 
 class _UserCenterSliceState extends State<UserCenterSlice> {
+  Map<String, dynamic> data = {
+    'uname': '椎名白白',
+    'sex': '男',
+    'signature': 'Time tick away, dream faded away!',
+    'uid': '7021686'
+  };
+
+  /// 1. 从后端查询的一个JSON
+  /// 格式可能是这样的：
+  /// {
+  ///   sex: '男',
+  ///   age: 10,
+  ///   uid: 1111
+  /// }
+  ///
+  /// 循环的第一回：
+  /// 模板的 content 字段可能接收这样的内容 uid
+  /// object['uid']
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,22 +36,23 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
         title: const Text("账号资料"),
       ),
       body: MultifunctionalList(
+        data: data,
         items: [
           MultifunctionalListData(
             label: '昵称',
-            content: Text('椎名白白'),
+            fieldName: 'uname',
           ),
           MultifunctionalListData(
             label: '性别',
-            content: Text('男'),
+            fieldName: 'sex',
           ),
           MultifunctionalListData(
             label: '个性签名',
-            content: Text('Time tick away, dream faded away!'),
+            fieldName: 'signature',
           ),
           MultifunctionalListData(
             label: 'UID',
-            content: Text('7021686'),
+            fieldName: 'uid',
           )
         ],
       ),

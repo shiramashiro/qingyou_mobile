@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 
 class MultifunctionalListData {
   final String label;
-  final Widget content;
+  final Widget? content;
   final IconData icon;
   final Function? onTap;
+  final String fieldName;
 
   MultifunctionalListData({
     required this.label,
-    required this.content,
+    required this.fieldName,
+    this.content,
     this.icon = Icons.arrow_forward_ios,
     this.onTap,
   });
 }
 
-/// 多功能列表
-/// 多功能列表的布局是左中右，左边为标签、中间为文本、右边为更多
-/// 标签：用来描述此列表
-/// 中间：浏览数据
-/// 右边：跳转页面或直接编辑中间的数据
 class MultifunctionalList extends StatefulWidget {
+  final Map<dynamic, dynamic> data;
   final List<MultifunctionalListData> items;
   final double tbMargin;
   final double lrMargin;
@@ -27,6 +25,7 @@ class MultifunctionalList extends StatefulWidget {
 
   const MultifunctionalList({
     Key? key,
+    required this.data,
     required this.items,
     this.tbMargin = 10,
     this.lrMargin = 10,
@@ -38,10 +37,13 @@ class MultifunctionalList extends StatefulWidget {
 }
 
 class _MultifunctionalListState extends State<MultifunctionalList> {
-  /// 1. 需要传递一个Map，包含左中两个Widget，右边为null时不显示更多按钮。可以有点击事件也可以没有。
-  /// 2. 规定Map内可以接受的参数类型。
-
-  Widget _createItems(String label, Widget content, IconData icon, Function? onTap) {
+  Widget _createItems(
+    String label,
+    Widget? content,
+    IconData icon,
+    String filedName,
+    Function? onTap,
+  ) {
     return InkWell(
       onTap: () => onTap!(),
       child: Padding(
@@ -60,7 +62,7 @@ class _MultifunctionalListState extends State<MultifunctionalList> {
                 color: widget.labelColor,
               ),
             ),
-            Expanded(child: content),
+            Expanded(child: Text(filedName)),
             Icon(icon),
           ],
         ),
@@ -70,8 +72,16 @@ class _MultifunctionalListState extends State<MultifunctionalList> {
 
   List<Widget> _createList() {
     List<Widget> items = [];
-    for (var item in widget.items) {
-      items.add(_createItems(item.label, item.content, item.icon, item.onTap));
+    for (int i = 0; i < widget.data.length; i++) {
+      items.add(
+        _createItems(
+          widget.items[i].label,
+          widget.items[i].content,
+          widget.items[i].icon,
+          widget.data[widget.items[i].fieldName],
+          widget.items[i].onTap,
+        ),
+      );
     }
     return items;
   }
