@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 typedef OnTap = void Function();
-typedef Created = Widget Function(dynamic e);
+typedef CreateContent = Widget Function(dynamic e);
 
 class ActionableListTemplate {
+  final bool isIcon;
   final String label;
   final String field;
-  final IconData icon;
-  final OnTap onTap;
-  final Created created;
+  final IconData? iconData;
+  final OnTap? onTap;
+  final CreateContent createContent;
 
   ActionableListTemplate({
     required this.label,
     required this.field,
-    this.icon = Icons.arrow_forward_ios,
-    required this.onTap,
-    required this.created,
+    this.isIcon = true,
+    this.iconData = Icons.arrow_forward_ios,
+    this.onTap,
+    required this.createContent,
   });
 }
 
@@ -44,15 +46,15 @@ class ActionableList extends StatefulWidget {
 }
 
 class _ActionableListState extends State<ActionableList> {
-  Widget _createItems(
-    int id,
-    String label,
-    String filed,
-    IconData icon,
-    OnTap onTap,
-    Created created,
-  ) {
-    Widget middle = created(filed);
+  Widget _createItem({
+    required String label,
+    required String filed,
+    IconData? iconData,
+    OnTap? onTap,
+    required CreateContent createContent,
+    required bool isIcon,
+  }) {
+    Widget middle = createContent(filed);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -71,8 +73,16 @@ class _ActionableListState extends State<ActionableList> {
                 color: widget.labelColor,
               ),
             ),
-            Expanded(child: middle),
-            Icon(icon),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [middle],
+                ),
+              ),
+            ),
+            isIcon ? Icon(iconData) : Container(),
           ],
         ),
       ),
@@ -83,13 +93,13 @@ class _ActionableListState extends State<ActionableList> {
     List<Widget> list = [];
     for (int i = 0; i < widget.data.length; i++) {
       list.add(
-        _createItems(
-          i,
-          widget.template[i].label,
-          widget.data[widget.template[i].field],
-          widget.template[i].icon,
-          widget.template[i].onTap,
-          widget.template[i].created,
+        _createItem(
+          label: widget.template[i].label,
+          filed: widget.data[widget.template[i].field],
+          iconData: widget.template[i].iconData,
+          onTap: widget.template[i].onTap,
+          createContent: widget.template[i].createContent,
+          isIcon: widget.template[i].isIcon,
         ),
       );
     }
