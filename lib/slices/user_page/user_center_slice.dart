@@ -13,7 +13,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
   Map<String, dynamic> data = {
     'uname': '椎名白白',
     'sex': '男',
-    'signature': 'Time tick away, dream faded away!',
+    'signature': 'Time tick away, dream faded awaydddddddddddddddddddddddddddddddddd!',
     'uid': '7021686',
     'avatar': 'assets/images/95893409_p0.jpg'
   };
@@ -38,25 +38,31 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
             label: '昵称',
             field: 'uname',
             onTap: () {},
-            createContent: (e) => Text(e),
+            createContent: (e) => Text(e, style: const TextStyle(color: Colors.grey)),
           ),
           ActionableListTemplate(
             label: '性别',
             field: 'sex',
             onTap: () {},
-            createContent: (e) => Text(e),
+            createContent: (e) => Text(e, style: const TextStyle(color: Colors.grey)),
           ),
           ActionableListTemplate(
             label: '个性签名',
             field: 'signature',
             onTap: () {},
-            createContent: (e) => Text(e),
+            createContent: (e) => Text(
+              e,
+              style: const TextStyle(
+                color: Colors.grey,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           ActionableListTemplate(
             isIcon: false,
             label: 'UID',
             field: 'uid',
-            createContent: (e) => Text(e),
+            createContent: (e) => Text(e, style: const TextStyle(color: Colors.grey)),
           )
         ],
       ),

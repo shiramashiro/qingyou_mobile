@@ -57,12 +57,17 @@ class _ActionableListState extends State<ActionableList> {
     Widget middle = createContent(filed);
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: widget.left,
-          top: widget.top,
-          right: widget.right,
-          bottom: widget.bottom,
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 44.5),
+        padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10, right: 0),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Color.fromRGBO(220, 220, 220, 1),
+              width: 0.5,
+              style: BorderStyle.solid,
+            ),
+          ),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,10 +80,10 @@ class _ActionableListState extends State<ActionableList> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 10, left: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [middle],
+                  children: [Flexible(child: middle)],
                 ),
               ),
             ),
