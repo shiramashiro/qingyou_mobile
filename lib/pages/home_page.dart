@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
+          backgroundColor: Theme.of(context).primaryColor,
           title: _createTitle(),
           bottom: const TabBar(
             isScrollable: true,
