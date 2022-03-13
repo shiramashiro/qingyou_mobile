@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:qingyuo_mobile/apis/login_api.dart';
+import 'package:qingyuo_mobile/service/login_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
@@ -7,8 +9,6 @@ import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/underline_text_button.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
-import 'package:qingyuo_mobile/apis/login_api.dart';
-import 'package:qingyuo_mobile/service/login_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/register_page.dart';
 import 'package:qingyuo_mobile/pages/roots/root_page.dart';
@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController accCtrl = TextEditingController();
   TextEditingController pwdCtrl = TextEditingController();
 
-  LoginService service = LoginService();
-  LoginApi api = LoginApi();
+  final LoginService _service = LoginService();
+  final LoginApi _api = LoginApi();
 
   @override
   void initState() {
@@ -41,7 +41,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -68,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     FormInput(
                       controller: accCtrl,
-                      validator: (e) => service.detectAccount(e),
+                      validator: (e) => _service.detectAccount(e),
                       label: '账号',
                       hint: '输入手机号/邮箱/用户名',
                       icon: Icons.account_circle,
@@ -87,7 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                         UnderlineTextButton(text: '密码找回', onTap: () {}),
                         UnderlineTextButton(
                           text: '用户注册',
-                          onTap: () => Roadmap.pushAndRemoveUntil(context, const RegisterPage()),
+                          onTap: () =>
+                              Roadmap.pushAndRemoveUntil(context, const RegisterPage()),
                         ),
                       ],
                     ),
@@ -97,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                         text: '登录',
                         onTap: () {
                           if ((formKey.currentState as FormState).validate()) {
-                            api.login(
-                              service.encapsulateData(pwdCtrl, accCtrl),
+                            _api.login(
+                              _service.encapsulateData(pwdCtrl, accCtrl),
                             );
                           }
                         },

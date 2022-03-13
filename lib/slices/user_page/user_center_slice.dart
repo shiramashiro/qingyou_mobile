@@ -22,7 +22,6 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
         title: const Text("账号资料"),
       ),
       body: ActionableList(

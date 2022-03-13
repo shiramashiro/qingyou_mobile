@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 
-class LoginPageService {
+class LoginService {
   bool isUname = false;
   bool isPhone = false;
   bool isEmail = false;

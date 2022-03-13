@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/apis/register_api.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
 import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/service/register_service.dart';
-import 'package:qingyuo_mobile/apis/register_api.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
 
@@ -25,14 +25,13 @@ class _RegisterPageState extends State<RegisterPage> {
   GlobalKey formKey = GlobalKey();
   GlobalKey textFormFiledKey = GlobalKey();
 
-  RegisterService service = RegisterService();
-  RegisterApi api = RegisterApi();
+  final RegisterService _service = RegisterService();
+  final RegisterApi _api = RegisterApi();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -88,8 +87,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   text: '注册',
                   onTap: () {
                     if ((formKey.currentState as FormState).validate()) {
-                      api.register(
-                        service.encapsulateData(
+                      _api.register(
+                        _service.encapsulateData(
                             unameCtrl.text, phoneCtrl.text, rePasswordCtrl.text),
                       );
                     }

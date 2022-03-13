@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/clickable_icon.dart';
 import 'package:qingyuo_mobile/components/icon_in_input.dart';
-import 'package:qingyuo_mobile/slices/home_page/hotpost_slice.dart';
-import 'package:qingyuo_mobile/slices/home_page/hotvideo_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/hot_post_slice.dart';
+import 'package:qingyuo_mobile/slices/home_page/hot_video_slice.dart';
 import 'package:qingyuo_mobile/slices/home_page/recommend_slice.dart';
 import 'package:qingyuo_mobile/slices/home_page/sight_slice.dart';
 import 'package:qingyuo_mobile/slices/home_page/tech_slice.dart';
@@ -57,7 +57,6 @@ class _HomePageState extends State<HomePage> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
           title: _createTitle(),
           bottom: const TabBar(
             isScrollable: true,
@@ -66,9 +65,9 @@ class _HomePageState extends State<HomePage> {
         ),
         body: const TabBarView(
           children: [
-            HotpostSlice(),
+            HotPostSlice(),
             RecommendSlice(),
-            HotvideoSlice(),
+            HotVideoSlice(),
             SightSlice(),
             TechSlice(),
           ],
