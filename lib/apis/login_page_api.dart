@@ -4,7 +4,7 @@ import 'http.dart';
 import 'package:qingyuo_mobile/utils/low_reuse.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 
-class LoginApi extends Http {
+class LoginPageApi extends Http {
   static const String _loginUrl = "http://localhost:8080/users/login";
 
   /// @desc: 登陆方法

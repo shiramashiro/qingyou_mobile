@@ -5,7 +5,7 @@ import 'package:qingyuo_mobile/components/form_input.dart';
 import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/service/register_page_service.dart';
-import 'package:qingyuo_mobile/apis/register_api.dart';
+import 'package:qingyuo_mobile/apis/register_page_api.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
 
@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   GlobalKey formKey = GlobalKey();
   GlobalKey textFormFiledKey = GlobalKey();
 
-  final RegisterService _service = RegisterService();
+  final RegisterPageService _service = RegisterPageService();
   final RegisterApi _api = RegisterApi();
 
   @override

@@ -29,11 +29,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # DIO HTTP 请求
   dio: ^4.0.4
+  # 加载
   flutter_easyloading: ^3.0.3
+  # 页面缓存
   proste_indexed_stack: ^0.2.4
-  # fluro: ^2.0.3
+  # 选择图片
   image_picker: ^0.8.4+11
+  # 状态管理
   provider: ^6.0.2
 
   # The following adds the Cupertino Icons font to your application.

@@ -7,7 +7,7 @@ import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/underline_text_button.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
-import 'package:qingyuo_mobile/apis/login_api.dart';
+import 'package:qingyuo_mobile/apis/login_page_api.dart';
 import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/register_page.dart';
@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController accCtrl = TextEditingController();
   TextEditingController pwdCtrl = TextEditingController();
 
-  final LoginService _service = LoginService();
-  final LoginApi _api = LoginApi();
+  final LoginPageService _service = LoginPageService();
+  final LoginPageApi _api = LoginPageApi();
 
   @override
   void initState() {
