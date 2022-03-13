@@ -7,8 +7,8 @@ import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/underline_text_button.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
-import 'package:qingyuo_mobile/apis/login_page_api.dart';
-import 'package:qingyuo_mobile/service/login_page_service.dart';
+import 'package:qingyuo_mobile/apis/login_api.dart';
+import 'package:qingyuo_mobile/service/login_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/register_page.dart';
 import 'package:qingyuo_mobile/pages/roots/root_page.dart';
@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController accCtrl = TextEditingController();
   TextEditingController pwdCtrl = TextEditingController();
 
-  final LoginPageService _service = LoginPageService();
-  final LoginPageApi _api = LoginPageApi();
+  LoginService service = LoginService();
+  LoginApi api = LoginApi();
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: const Color.fromRGBO(147, 181, 207, 6),
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     FormInput(
                       controller: accCtrl,
-                      validator: (e) => _service.detectAccount(e),
+                      validator: (e) => service.detectAccount(e),
                       label: '账号',
                       hint: '输入手机号/邮箱/用户名',
                       icon: Icons.account_circle,
@@ -97,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                         text: '登录',
                         onTap: () {
                           if ((formKey.currentState as FormState).validate()) {
-                            _api.login(
-                              _service.encapsulateData(pwdCtrl, accCtrl),
+                            api.login(
+                              service.encapsulateData(pwdCtrl, accCtrl),
                             );
                           }
                         },
