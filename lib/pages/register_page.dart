@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/apis/register_api.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
