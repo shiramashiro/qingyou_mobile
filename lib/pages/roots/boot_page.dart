@@ -12,11 +12,11 @@ class BootPage extends StatefulWidget {
 }
 
 class _BootPageState extends State<BootPage> {
-  int currentTime = 6;
-  late Timer timer;
+  int _currentTime = 6;
+  late Timer _timer;
 
   void router() {
-    timer.cancel();
+    _timer.cancel();
     Roadmap.pushAndRemoveUntil(context, const RootPage());
   }
 
@@ -38,7 +38,7 @@ class _BootPageState extends State<BootPage> {
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
               Text(
-                '${currentTime}s',
+                '${_currentTime}s',
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               )
             ],
@@ -51,11 +51,11 @@ class _BootPageState extends State<BootPage> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        currentTime--;
+        _currentTime--;
       });
-      if (currentTime <= 0) {
+      if (_currentTime <= 0) {
         router();
       }
     });

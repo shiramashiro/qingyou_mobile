@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/login_api.dart';
-import 'package:qingyuo_mobile/service/login_service.dart';
+import 'package:qingyuo_mobile/apis/primary_api.dart';
+import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
@@ -21,12 +21,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey formKey = GlobalKey<FormState>();
-  TextEditingController accCtrl = TextEditingController();
-  TextEditingController pwdCtrl = TextEditingController();
-
-  final LoginService _service = LoginService();
-  final LoginApi _api = LoginApi();
+  final GlobalKey _formKey = GlobalKey<FormState>();
+  final TextEditingController _accCtrl = TextEditingController();
+  final TextEditingController _pwdCtrl = TextEditingController();
+  final LoginPageService _service = LoginPageService();
 
   @override
   void initState() {
@@ -62,18 +60,18 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               margin: const EdgeInsets.only(top: 50),
               child: Form(
-                key: formKey,
+                key: _formKey,
                 child: Column(
                   children: [
                     FormInput(
-                      controller: accCtrl,
+                      controller: _accCtrl,
                       validator: (e) => _service.detectAccount(e),
                       label: '账号',
                       hint: '输入手机号/邮箱/用户名',
                       icon: Icons.account_circle,
                     ),
                     FormInput(
-                      controller: pwdCtrl,
+                      controller: _pwdCtrl,
                       obscure: true,
                       validator: (e) => Detection.detectPwd(e),
                       label: '密码',
@@ -86,8 +84,10 @@ class _LoginPageState extends State<LoginPage> {
                         UnderlineTextButton(text: '密码找回', onTap: () {}),
                         UnderlineTextButton(
                           text: '用户注册',
-                          onTap: () =>
-                              Roadmap.pushAndRemoveUntil(context, const RegisterPage()),
+                          onTap: () => Roadmap.pushAndRemoveUntil(
+                            context,
+                            const RegisterPage(),
+                          ),
                         ),
                       ],
                     ),
@@ -96,10 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: CircleButton(
                         text: '登录',
                         onTap: () {
-                          if ((formKey.currentState as FormState).validate()) {
-                            _api.login(
-                              _service.encapsulateData(pwdCtrl, accCtrl),
-                            );
+                          if ((_formKey.currentState as FormState).validate()) {
+                            _service.login(_pwdCtrl, _accCtrl);
                           }
                         },
                       ),

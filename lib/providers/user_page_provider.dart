@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class ImagePickProvider with ChangeNotifier {
+class UserPageProvider with ChangeNotifier {
   dynamic _image;
 
   dynamic get getImage => _image;

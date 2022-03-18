@@ -5,7 +5,7 @@ import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
 import 'package:qingyuo_mobile/components/text_icon.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
-import 'package:qingyuo_mobile/service/register_service.dart';
+import 'package:qingyuo_mobile/service/register_page_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
 
@@ -25,8 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   GlobalKey formKey = GlobalKey();
   GlobalKey textFormFiledKey = GlobalKey();
 
-  final RegisterService _service = RegisterService();
-  final RegisterApi _api = RegisterApi();
+  final RegisterPageService _service = RegisterPageService();
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   text: '注册',
                   onTap: () {
                     if ((formKey.currentState as FormState).validate()) {
-                      _api.register(
-                        _service.encapsulateData(
-                            unameCtrl.text, phoneCtrl.text, rePasswordCtrl.text),
-                      );
+                      _service.register(unameCtrl, phoneCtrl, rePasswordCtrl);
                     }
                   },
                 ),
