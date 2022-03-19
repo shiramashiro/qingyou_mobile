@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/primary_api.dart';
+import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
-import 'package:qingyuo_mobile/utils/http_response.dart';
+import 'package:qingyuo_mobile/apis/utils/http_response.dart';
 
 class RegisterPageService {
-  final PrimaryApi _api = PrimaryApi();
+  final CommonApi _api = CommonApi();
 
   void register(
     TextEditingController uname,
@@ -13,8 +13,10 @@ class RegisterPageService {
     TextEditingController password,
   ) {
     Future future = _api.register(_packRegisterFormData(uname, phone, password));
-    EasyLoading.show(status: '注册中...');
-    HttpResponse().resByLoading(future);
+    HttpResponse().handleFutureByLoading(
+      onFutureBefore: () => EasyLoading.show(status: '注册中...'),
+      doFuture: future,
+    );
   }
 
   User _packRegisterFormData(

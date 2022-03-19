@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/primary_api.dart';
+import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
-import 'package:qingyuo_mobile/utils/http_response.dart';
+import 'package:qingyuo_mobile/apis/utils/http_response.dart';
 
 class LoginPageService {
   bool _isUname = false;
   bool _isPhone = false;
   bool _isEmail = false;
-  final PrimaryApi _api = PrimaryApi();
+  final CommonApi _api = CommonApi();
 
   void login(
     TextEditingController password,
     TextEditingController account,
   ) {
-    Future future = _api.login(_packLoginFormData(password, account));
-    EasyLoading.show(status: '登录中...');
-    HttpResponse().resByLoading(future);
+    HttpResponse().handleFutureByLoading(
+      onFutureBefore: () => EasyLoading.show(status: '登录中...'),
+      doFuture: _api.login(_packLoginFormData(password, account)),
+    );
   }
 
   /// @desc: 封装表单数据

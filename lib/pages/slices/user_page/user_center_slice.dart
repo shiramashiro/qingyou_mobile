@@ -20,7 +20,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
     'avatar': 'assets/images/95893409_p0.jpg'
   };
 
-  final UserCenterSliceService _service = UserCenterSliceService();
+  final UserPageSliceService _service = UserPageSliceService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
                 label: '头像',
                 field: 'avatar',
                 onTap: () {
-                  _service.uploadAvatar(0, 'shiramashiro');
+                  _service.updateAvatar(0, 'shiramashiro');
                 },
                 createContent: (e) => Avatar(url: e, size: 55),
               ),

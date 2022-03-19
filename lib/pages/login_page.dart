@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/primary_api.dart';
+import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';

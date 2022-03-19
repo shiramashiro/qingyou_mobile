@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/pages/roots/boot_page.dart';
-import 'package:qingyuo_mobile/providers/user_page_provider.dart';
+import 'package:qingyuo_mobile/providers/user_provider.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => UserPageProvider()),
+      ChangeNotifierProvider(create: (_) => UserProvider()),
     ],
     child: const MyApp(),
   ));

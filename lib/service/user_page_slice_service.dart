@@ -1,16 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qingyuo_mobile/apis/upload_api.dart';
+import 'package:qingyuo_mobile/apis/utils/http_response.dart';
 
-class UserCenterSliceService {
+class UserPageSliceService {
   final ImagePicker _picker = ImagePicker();
   final UploadApi _api = UploadApi();
 
-  void uploadAvatar(int id, String uname) async {
+  void updateAvatar(int id, String uname) async {
     XFile? img = await _picker.pickImage(source: ImageSource.gallery);
-    if (img == null) return;
-    MultipartFile file = await MultipartFile.fromFile(img.path, filename: img.name);
-    FormData formData = FormData.fromMap({'uid': id, 'uname': uname, 'file': file});
-    _api.uploadAvatar(formData);
+    if (img != null) {
+      HttpResponse().handleFutureByLoading(
+        onFutureBefore: () => EasyLoading.show(status: '上传中...'),
+        doFuture: _api.updateAvatar(FormData.fromMap({
+          'uid': id,
+          'uname': uname,
+          'file': await MultipartFile.fromFile(img.path, filename: img.name),
+        })),
+        onFutureSuccess: (e) {
+          // 将照片存入provider
+          print(e);
+        }
+      );
+
+    }
   }
 }
