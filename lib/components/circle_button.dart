@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+typedef OnTap = void Function();
+
 class CircleButton extends StatelessWidget {
-  final Function onTap;
+  final OnTap? onTap;
   final String text;
 
   const CircleButton({
     Key? key,
-    required this.onTap,
+    this.onTap,
     required this.text,
   }) : super(key: key);
 
@@ -20,7 +22,7 @@ class CircleButton extends StatelessWidget {
           width: 2,
         ),
       ),
-      onPressed: () => onTap(),
+      onPressed: onTap,
       child: Text(
         text,
         style: const TextStyle(

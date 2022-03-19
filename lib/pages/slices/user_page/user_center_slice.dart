@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qingyuo_mobile/components/actionable_list.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
-import 'package:qingyuo_mobile/service/user_center_slice_service.dart';
+import 'package:qingyuo_mobile/service/user_page_slice_service.dart';
 
 class UserCenterSlice extends StatefulWidget {
   const UserCenterSlice({Key? key}) : super(key: key);

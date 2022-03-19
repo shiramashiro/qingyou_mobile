@@ -16,14 +16,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController unameCtrl = TextEditingController();
-  TextEditingController phoneCtrl = TextEditingController();
-  TextEditingController passwordCtrl = TextEditingController();
-  TextEditingController rePasswordCtrl = TextEditingController();
-
-  GlobalKey formKey = GlobalKey();
-  GlobalKey textFormFiledKey = GlobalKey();
-
+  final TextEditingController _uname = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _rePassword = TextEditingController();
+  final GlobalKey _formKey = GlobalKey();
   final RegisterPageService _service = RegisterPageService();
 
   @override
@@ -44,27 +41,27 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
       body: Form(
-        key: formKey,
+        key: _formKey,
         child: Container(
           margin: const EdgeInsets.fromLTRB(55, 50, 55, 0),
           child: Column(
             children: [
               FormInput(
-                controller: unameCtrl,
+                controller: _uname,
                 validator: (e) => Detection.detectUname(e),
                 label: '用户名',
                 hint: '请输入用户名',
                 icon: Icons.account_circle,
               ),
               FormInput(
-                controller: phoneCtrl,
+                controller: _phone,
                 validator: (e) => Detection.detectPhone(e),
                 label: '手机号',
                 hint: '输入手机号码',
                 icon: Icons.phone,
               ),
               FormInput(
-                controller: passwordCtrl,
+                controller: _password,
                 obscure: true,
                 validator: (e) => Detection.detectPwd(e),
                 label: '密码',
@@ -72,9 +69,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 icon: Icons.lock,
               ),
               FormInput(
-                controller: rePasswordCtrl,
+                controller: _rePassword,
                 obscure: true,
-                validator: (e) => Detection.reDetectPwd(e, passwordCtrl.text),
+                validator: (e) => Detection.reDetectPwd(e, _password.text),
                 label: '密码',
                 hint: '再次输入密码以确保密码一致',
                 icon: Icons.lock_open,
@@ -84,8 +81,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: CircleButton(
                   text: '注册',
                   onTap: () {
-                    if ((formKey.currentState as FormState).validate()) {
-                      _service.register(unameCtrl, phoneCtrl, rePasswordCtrl);
+                    if ((_formKey.currentState as FormState).validate()) {
+                      _service.register(_uname, _phone, _rePassword);
                     }
                   },
                 ),

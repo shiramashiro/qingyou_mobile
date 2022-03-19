@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+typedef OnTap = void Function();
+
 class Avatar extends StatelessWidget {
   final double size;
   final String url;
-  final Function? onTap;
+  final OnTap? onTap;
 
   const Avatar({
     Key? key,
@@ -15,9 +17,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (onTap != null) onTap!();
-      },
+      onTap: onTap,
       child: SizedBox(
         width: size,
         height: size,

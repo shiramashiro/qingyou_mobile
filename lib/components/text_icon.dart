@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef OnTap = void Function();
+
 class TextIcon extends StatelessWidget {
   final double holeSize;
   final double iconSize;
@@ -8,7 +10,7 @@ class TextIcon extends StatelessWidget {
   final String? iconPath;
   final IconData? icon;
   final Color textColor;
-  final Function? onTap;
+  final OnTap? onTap;
 
   const TextIcon({
     Key? key,
@@ -25,9 +27,7 @@ class TextIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (onTap != null) onTap!();
-      },
+      onTap: onTap,
       child: SizedBox(
         width: holeSize,
         height: holeSize,

@@ -14,12 +14,10 @@ class HttpResponse {
     5005: '用户名已存在',
   };
 
-  Map<int, String> get codes => _codes;
-
   /// @desc: Http 请求完成之后对 state（状态码）作出相应的提示
   /// @author: shiramashiro
   /// @date: 2022/3/5
-  void responseState(dynamic json) {
+  void resState(dynamic json) {
     int fromJsonState = jsonDecode(json.toString())['state'];
     _codes.forEach((definedStateCode, definedStateValue) {
       if (fromJsonState == definedStateCode) {
@@ -32,12 +30,12 @@ class HttpResponse {
   void resByLoading(Future future) {
     future.then((value) {
       EasyLoading.dismiss();
-      HttpResponse().responseState(value);
+      resState(value);
     }, onError: (e) {
       EasyLoading.dismiss();
       EasyLoading.showToast('未知错误');
     }).timeout(
-      const Duration(milliseconds: 12000),
+      const Duration(milliseconds: 20000),
       onTimeout: () {
         EasyLoading.dismiss();
         EasyLoading.showToast('连接超时');

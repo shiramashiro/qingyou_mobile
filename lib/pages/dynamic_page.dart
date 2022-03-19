@@ -8,7 +8,6 @@ class DynamicPage extends StatefulWidget {
 }
 
 class _DynamicPageState extends State<DynamicPage> {
-
   @override
   void initState() {
     super.initState();

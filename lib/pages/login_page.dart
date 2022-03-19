@@ -22,8 +22,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey _formKey = GlobalKey<FormState>();
-  final TextEditingController _accCtrl = TextEditingController();
-  final TextEditingController _pwdCtrl = TextEditingController();
+  final TextEditingController _account = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   final LoginPageService _service = LoginPageService();
 
   @override
@@ -64,14 +64,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     FormInput(
-                      controller: _accCtrl,
+                      controller: _account,
                       validator: (e) => _service.detectAccount(e),
                       label: '账号',
                       hint: '输入手机号/邮箱/用户名',
                       icon: Icons.account_circle,
                     ),
                     FormInput(
-                      controller: _pwdCtrl,
+                      controller: _password,
                       obscure: true,
                       validator: (e) => Detection.detectPwd(e),
                       label: '密码',
@@ -81,13 +81,15 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        UnderlineTextButton(text: '密码找回', onTap: () {}),
+                        const UnderlineTextButton(text: '密码找回'),
                         UnderlineTextButton(
                           text: '用户注册',
-                          onTap: () => Roadmap.pushAndRemoveUntil(
-                            context,
-                            const RegisterPage(),
-                          ),
+                          onTap: () {
+                            Roadmap.pushAndRemoveUntil(
+                              context,
+                              const RegisterPage(),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -97,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: '登录',
                         onTap: () {
                           if ((_formKey.currentState as FormState).validate()) {
-                            _service.login(_pwdCtrl, _accCtrl);
+                            _service.login(_password, _account);
                           }
                         },
                       ),
