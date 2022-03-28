@@ -52,7 +52,7 @@ class HttpResponse {
     doFuture.then((value) {
       EasyLoading.dismiss();
       EasyLoading.showToast(getMsg(value));
-      onFutureSuccess != null ? onFutureSuccess(value) : "";
+      onFutureSuccess != null ? onFutureSuccess(getData(value)) : "";
     }, onError: (e) {
       EasyLoading.dismiss();
       EasyLoading.showToast('未知错误');

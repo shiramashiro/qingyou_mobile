@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: '登录',
                         onTap: () {
                           if ((_formKey.currentState as FormState).validate()) {
-                            _service.login(_password, _account);
+                            _service.login(_password, _account, context);
                           }
                         },
                       ),

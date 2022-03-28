@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:qingyuo_mobile/components/actionable_list.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
+import 'package:qingyuo_mobile/providers/user_provider.dart';
 import 'package:qingyuo_mobile/service/user_page_slice_service.dart';
 
 class UserCenterSlice extends StatefulWidget {
@@ -37,15 +38,21 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
                 label: '头像',
                 field: 'avatar',
                 onTap: () {
-                  _service.updateAvatar(0, 'shiramashiro');
+                  _service.updateAvatar(0, 'shiramashiro', context: context);
                 },
-                createContent: (e) => Avatar(url: e, size: 55),
+                content: (e) {
+                  var avatar = context.watch<UserProvider>().getUser.avatar;
+                  print(avatar);
+                  return Avatar(
+                    url: avatar ?? '',
+                    size: 55,
+                  );
+                },
               ),
               ActionableListTemplate(
                 label: '昵称',
                 field: 'uname',
-                onTap: () {},
-                createContent: (e) => Text(
+                content: (e) => Text(
                   e,
                   style: const TextStyle(
                     color: Colors.grey,
@@ -55,8 +62,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
               ActionableListTemplate(
                 label: '性别',
                 field: 'sex',
-                onTap: () {},
-                createContent: (e) => Text(
+                content: (e) => Text(
                   e,
                   style: const TextStyle(
                     color: Colors.grey,
@@ -66,8 +72,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
               ActionableListTemplate(
                 label: '个性签名',
                 field: 'signature',
-                onTap: () {},
-                createContent: (e) => Text(
+                content: (e) => Text(
                   e,
                   style: const TextStyle(
                     color: Colors.grey,
@@ -78,7 +83,7 @@ class _UserCenterSliceState extends State<UserCenterSlice> {
                 isIcon: false,
                 label: 'UID',
                 field: 'uid',
-                createContent: (e) => Text(
+                content: (e) => Text(
                   e,
                   style: const TextStyle(
                     color: Colors.grey,

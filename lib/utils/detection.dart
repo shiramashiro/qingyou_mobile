@@ -13,6 +13,9 @@ class RegExpValues {
       r"^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])";
 
   static const String password = r"^[0-9A-za-z\-\_\.]{6,16}$";
+
+  static const String url =
+      r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$";
 }
 
 /// 保存着各种提示消息，比如，手机号的格式错误、电子邮箱的格式错误等。
@@ -78,5 +81,9 @@ class Detection {
     } else {
       return Detection.detectPwd(e);
     }
+  }
+
+  static bool detectUrl(String e) {
+    return Detection.match(e, RegExpValues.url);
   }
 }

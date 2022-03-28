@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/pages/roots/boot_page.dart';
+import 'package:qingyuo_mobile/pages/login_page.dart';
 import 'package:qingyuo_mobile/providers/user_provider.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const BootPage(),
+      home: const LoginPage(),
       builder: EasyLoading.init(),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(

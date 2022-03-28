@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-typedef OnTap = void Function();
+import 'package:qingyuo_mobile/utils/callbacks.dart';
 
 class TextIcon extends StatelessWidget {
   final double holeSize;

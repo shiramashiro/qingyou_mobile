@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-typedef OnTap = void Function();
+import 'package:qingyuo_mobile/utils/callbacks.dart';
 
 class CircleButton extends StatelessWidget {
   final OnTap? onTap;

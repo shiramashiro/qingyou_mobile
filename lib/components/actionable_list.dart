@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-typedef OnTap = void Function();
-typedef CreateContent = Widget Function(dynamic e);
+import 'package:qingyuo_mobile/utils/callbacks.dart';
 
 class ActionableListTemplate {
   final bool isIcon;
@@ -9,7 +7,7 @@ class ActionableListTemplate {
   final String field;
   final IconData? iconData;
   final OnTap? onTap;
-  final CreateContent createContent;
+  final CreateActionableListContent content;
 
   ActionableListTemplate({
     required this.label,
@@ -17,7 +15,7 @@ class ActionableListTemplate {
     this.isIcon = true,
     this.iconData = Icons.arrow_forward_ios,
     this.onTap,
-    required this.createContent,
+    required this.content,
   });
 }
 
@@ -51,10 +49,10 @@ class _ActionableListState extends State<ActionableList> {
     required String filed,
     IconData? iconData,
     OnTap? onTap,
-    required CreateContent createContent,
+    required CreateActionableListContent content,
     required bool isIcon,
   }) {
-    Widget middle = createContent(filed);
+    Widget middle = content(filed);
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -98,7 +96,7 @@ class _ActionableListState extends State<ActionableList> {
           filed: widget.data[widget.template[i].field],
           iconData: widget.template[i].iconData,
           onTap: widget.template[i].onTap,
-          createContent: widget.template[i].createContent,
+          content: widget.template[i].content,
           isIcon: widget.template[i].isIcon,
         ),
       );

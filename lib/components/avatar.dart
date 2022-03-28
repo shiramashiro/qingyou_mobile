@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/utils/detection.dart';
 
 typedef OnTap = void Function();
 
@@ -14,6 +15,14 @@ class Avatar extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
+  ImageProvider _createImage() {
+    if (Detection.detectUrl(url)) {
+      return NetworkImage(url);
+    } else {
+      return AssetImage(url);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -22,7 +31,7 @@ class Avatar extends StatelessWidget {
         width: size,
         height: size,
         child: CircleAvatar(
-          backgroundImage: AssetImage(url),
+          backgroundImage: _createImage(),
         ),
       ),
     );

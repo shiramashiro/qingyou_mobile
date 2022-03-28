@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
+import 'package:qingyuo_mobile/providers/user_provider.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/utils/http_response.dart';
 
@@ -14,10 +16,14 @@ class LoginPageService {
   void login(
     TextEditingController password,
     TextEditingController account,
+    BuildContext context,
   ) {
     HttpResponse().handleFutureByLoading(
       onFutureBefore: () => EasyLoading.show(status: '登录中...'),
       doFuture: _api.login(_packLoginFormData(password, account)),
+      onFutureSuccess: (e) {
+        context.read<UserProvider>().setUser(User.fromJson(e));
+      },
     );
   }
 
