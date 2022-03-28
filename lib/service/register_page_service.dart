@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
-import 'package:qingyuo_mobile/apis/utils/http_response.dart';
+import 'package:qingyuo_mobile/apis/http/http_response.dart';
 
 class RegisterPageService {
-  final CommonApi _api = CommonApi();
+  final CommonAPI _api = CommonAPI();
 
   void register(
     TextEditingController uname,

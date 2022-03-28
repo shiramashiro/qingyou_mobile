@@ -2,16 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
+import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 import 'package:qingyuo_mobile/providers/user_provider.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
-import 'package:qingyuo_mobile/apis/utils/http_response.dart';
+import 'package:qingyuo_mobile/apis/http/http_response.dart';
 
 class LoginPageService {
   bool _isUname = false;
   bool _isPhone = false;
   bool _isEmail = false;
-  final CommonApi _api = CommonApi();
+  final CommonAPI _api = CommonAPI();
 
   void login(
     TextEditingController password,
@@ -20,17 +21,25 @@ class LoginPageService {
   ) {
     HttpResponse().handleFutureByLoading(
       onFutureBefore: () => EasyLoading.show(status: '登录中...'),
-      doFuture: _api.login(_packLoginFormData(password, account)),
+      doFuture: _api.login(_packData(password, account)),
       onFutureSuccess: (e) {
-        context.read<UserProvider>().setUser(User.fromJson(e));
+        _fillData(User.fromJson(e).toJson());
       },
     );
   }
 
-  /// @desc: 封装表单数据
-  /// @author: shiramashiro
-  /// @date: 2022/3/4
-  User _packLoginFormData(TextEditingController password, TextEditingController account) {
+  _fillData(Map<String, dynamic> user) async {
+    SQLiteOperation sqlOp = SQLiteOperation(table: 'user');
+    bool exists = await sqlOp.existence();
+    if (exists) {
+      print('存在');
+    } else {
+      print('不存在');
+      sqlOp.createTable(model: user, constraints: [FieldConstraint(index: 0, value: 'primary key autoincrement')]);
+    }
+  }
+
+  User _packData(TextEditingController password, TextEditingController account) {
     User user;
     if (_isUname) {
       user = User(psw: password.text, uname: account.text);
@@ -42,11 +51,7 @@ class LoginPageService {
     return user;
   }
 
-  /// @desc: 验证账号格式是否正确
-  /// @author: shiramashiro
-  /// @date: 2022/3/3
   String? detectAccount(String? e) {
-    /// 如果账号未输入，下面的步骤全部终止进行。
     if (e!.isEmpty) return "账号不能为空";
 
     _isPhone = Detection.match(e, RegExpValues.phone);

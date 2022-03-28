@@ -1,6 +1,3 @@
-/// @desc: Users 模型类
-/// @author: shiramashiro
-/// @date: 2022/3/3
 class User {
   int? id;
   String? psw;

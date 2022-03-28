@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-typedef OnFutureBefore = void Function();
-typedef OnFutureSuccess = void Function(dynamic e);
+import 'package:qingyuo_mobile/utils/callbacks.dart';
 
 /// 发起请求之后，需要对请求过来的 Future 进行操作。
 class HttpResponse {
   final Map<int, String> _codes = {
     2000: '登陆成功',
     2001: '注册成功',
+    2002: '登陆成功',
     2004: '上传成功',
     5000: '手机号不正确',
     5001: '用户名不正确',
@@ -48,11 +47,11 @@ class HttpResponse {
     OnFutureSuccess? onFutureSuccess,
     int milliseconds = 20000,
   }) {
-    onFutureBefore != null ? onFutureBefore() : "";
+    if (onFutureBefore != null) onFutureBefore();
     doFuture.then((value) {
       EasyLoading.dismiss();
       EasyLoading.showToast(getMsg(value));
-      onFutureSuccess != null ? onFutureSuccess(getData(value)) : "";
+      if (onFutureSuccess != null) onFutureSuccess(getData(value)['data']);
     }, onError: (e) {
       EasyLoading.dismiss();
       EasyLoading.showToast('未知错误');
