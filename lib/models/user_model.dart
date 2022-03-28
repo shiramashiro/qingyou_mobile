@@ -4,8 +4,8 @@ class User {
   String? uname;
   String? email;
   String? phone;
-  DateTime? createdDate;
-  DateTime? birthday;
+  String? createdDate;
+  String? birthday;
   String? signature;
   String? sex;
   String? location;
@@ -39,7 +39,7 @@ class User {
     uname = json['uname'];
     email = json['email'];
     phone = json['phone'];
-    createdDate = json['createDate'];
+    createdDate = json['create_date'];
     birthday = json['birthday'];
     signature = json['signature'];
     sex = json['sex'];
@@ -58,7 +58,7 @@ class User {
     data['uname'] = uname;
     data['email'] = email;
     data['phone'] = phone;
-    data['createDate'] = createdDate;
+    data['create_date'] = createdDate;
     data['birthday'] = birthday;
     data['signature'] = signature;
     data['sex'] = sex;

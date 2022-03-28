@@ -32,9 +32,11 @@ class LoginPageService {
     SQLiteOperation sqlOp = SQLiteOperation(table: 'user');
     bool exists = await sqlOp.existence();
     if (exists) {
-      print('存在');
+      var db = await sqlOp.open();
+      db.insert('user', user);
+      var result = await db.query('user');
+      print(result);
     } else {
-      print('不存在');
       sqlOp.createTable(model: user, constraints: [FieldConstraint(index: 0, value: 'primary key autoincrement')]);
     }
   }
