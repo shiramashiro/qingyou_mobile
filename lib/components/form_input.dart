@@ -8,6 +8,10 @@ class FormInput extends StatelessWidget {
   final String label;
   final String hint;
   final IconData icon;
+  final double marginLeft;
+  final double marginTop;
+  final double marginRight;
+  final double marginBottom;
 
   const FormInput({
     Key? key,
@@ -18,12 +22,17 @@ class FormInput extends StatelessWidget {
     required this.label,
     required this.hint,
     required this.icon,
+    this.marginTop = 0,
+    this.marginLeft = 0,
+    this.marginRight = 0,
+    this.marginBottom = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 85,
+    return Container(
+      margin: EdgeInsets.only(left: marginLeft, top: marginTop, right: marginRight, bottom: marginBottom, ),
+      height: 80,
       child: TextFormField(
         controller: controller,
         validator: (e) => validator(e),

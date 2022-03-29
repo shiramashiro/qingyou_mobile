@@ -42,21 +42,20 @@ class HttpResponse {
   /// 2. 请求之后需要做什么。doFuture
   /// 3. 请求成功需要做什么。onFutureSuccess
   void handleFutureByLoading({
-    required Future doFuture,
-    OnFutureBefore? onFutureBefore,
-    OnFutureSuccess? onFutureSuccess,
-    int milliseconds = 20000,
+    OnFutureBefore? onBefore,
+    required Future onDoing,
+    OnFutureSuccess? onSuccess,
   }) {
-    if (onFutureBefore != null) onFutureBefore();
-    doFuture.then((value) {
+    if (onBefore != null) onBefore();
+    onDoing.then((value) {
       EasyLoading.dismiss();
       EasyLoading.showToast(getMsg(value));
-      if (onFutureSuccess != null) onFutureSuccess(getData(value)['data']);
+      if (onSuccess != null) onSuccess(getData(value)['data']);
     }, onError: (e) {
       EasyLoading.dismiss();
       EasyLoading.showToast('未知错误');
     }).timeout(
-      Duration(milliseconds: milliseconds),
+      const Duration(milliseconds: 20000),
       onTimeout: () {
         EasyLoading.dismiss();
         EasyLoading.showToast('连接超时');

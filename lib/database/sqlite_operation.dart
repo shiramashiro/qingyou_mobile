@@ -27,7 +27,7 @@ class SQLiteOperation {
     return await databaseExists(table);
   }
 
-  void _executeSql(
+  Future _executeSql(
     String sql,
   ) async {
     await openDatabase(
@@ -73,7 +73,7 @@ class SQLiteOperation {
     return sql += ')';
   }
 
-  void createTable({required Map<String, dynamic> model, required List<FieldConstraint> constraints}) {
-    _executeSql(_mergeSql(model, constraints));
+  Future createTable({required Map<String, dynamic> model, required List<FieldConstraint> constraints}) async {
+    await _executeSql(_mergeSql(model, constraints));
   }
 }

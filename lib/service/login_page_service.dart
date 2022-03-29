@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:provider/provider.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
-import 'package:qingyuo_mobile/providers/user_provider.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
+import 'package:sqflite/sqflite.dart';
 
 class LoginPageService {
   bool _isUname = false;
@@ -14,34 +13,31 @@ class LoginPageService {
   bool _isEmail = false;
   final CommonAPI _api = CommonAPI();
 
-  void login(
-    TextEditingController password,
-    TextEditingController account,
-    BuildContext context,
-  ) {
+  void login(TextEditingController password, TextEditingController account) {
     HttpResponse().handleFutureByLoading(
-      onFutureBefore: () => EasyLoading.show(status: '登录中...'),
-      doFuture: _api.login(_packData(password, account)),
-      onFutureSuccess: (e) {
-        _fillData(User.fromJson(e).toJson());
+      onBefore: () => EasyLoading.show(status: '登录中...'),
+      onDoing: _api.login(_babelData(password, account)),
+      onSuccess: (e) {
+        _updateDatabase(User.fromJson(e).toJson());
       },
     );
   }
 
-  _fillData(Map<String, dynamic> user) async {
-    SQLiteOperation sqlOp = SQLiteOperation(table: 'user');
-    bool exists = await sqlOp.existence();
-    if (exists) {
-      var db = await sqlOp.open();
-      db.insert('user', user);
-      var result = await db.query('user');
-      print(result);
+  _updateDatabase(Map<String, dynamic> user) async {
+    String table = 'user';
+    SQLiteOperation sqlOp = SQLiteOperation(table: table);
+    Database database = await sqlOp.open();
+    if (!await sqlOp.existence()) {
+      await sqlOp.createTable(model: user, constraints: [
+        FieldConstraint(index: 0, value: 'PRIMARY KEY AUTOINCREMENT'),
+      ]);
+      database.insert(table, user);
     } else {
-      sqlOp.createTable(model: user, constraints: [FieldConstraint(index: 0, value: 'primary key autoincrement')]);
+      await database.update(table, user);
     }
   }
 
-  User _packData(TextEditingController password, TextEditingController account) {
+  User _babelData(TextEditingController password, TextEditingController account) {
     User user;
     if (_isUname) {
       user = User(psw: password.text, uname: account.text);

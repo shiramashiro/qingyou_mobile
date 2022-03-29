@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:qingyuo_mobile/apis/common_api.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
@@ -27,17 +26,17 @@ class _LoginPageState extends State<LoginPage> {
   final LoginPageService _service = LoginPageService();
 
   @override
-  void initState() {
-    super.initState();
-    EasyLoading.instance
-      ..radius = 20
-      ..maskType = EasyLoadingMaskType.clear
-      ..loadingStyle = EasyLoadingStyle.dark;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(
+      BoxConstraints(maxWidth: MediaQuery.of(context).size.width, maxHeight: MediaQuery.of(context).size.height),
+      context: context,
+      designSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+      minTextAdapt: true,
+      orientation: Orientation.portrait,
+    );
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,12 +52,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(55, 50, 55, 0),
+        margin: EdgeInsets.fromLTRB(0.12.sw, 0.05.sh, 0.12.sw, 0),
+        // margin: EdgeInsets.fromLTRB(20, 50, 20, 0),
         child: Column(
           children: [
             const Avatar(url: "assets/images/95893409_p0.jpg"),
             Container(
-              margin: const EdgeInsets.only(top: 50),
+              margin: EdgeInsets.only(top: 0.05.sh),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -94,12 +94,12 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 0),
+                      margin: EdgeInsets.only(top: 0.05.sh),
                       child: CircleButton(
                         text: '登录',
                         onTap: () {
                           if ((_formKey.currentState as FormState).validate()) {
-                            _service.login(_password, _account, context);
+                            _service.login(_password, _account);
                           }
                         },
                       ),
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 40, bottom: 20),
+              margin: EdgeInsets.only(top: 0.05.sh, bottom: 0.02.sh),
               child: const TextDivider('快捷登录'),
             ),
             Row(

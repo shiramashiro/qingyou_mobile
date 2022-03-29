@@ -20,13 +20,13 @@ class UserPageSliceService {
     XFile? img = await _picker.pickImage(source: ImageSource.gallery);
     if (img != null) {
       HttpResponse().handleFutureByLoading(
-        onFutureBefore: () => EasyLoading.show(status: '上传中...'),
-        doFuture: _api.updateAvatar(FormData.fromMap({
+        onBefore: () => EasyLoading.show(status: '上传中...'),
+        onDoing: _api.updateAvatar(FormData.fromMap({
           'uid': uid,
           'uname': uname,
           'file': await MultipartFile.fromFile(img.path, filename: img.name),
         })),
-        onFutureSuccess: (e) {
+        onSuccess: (e) {
           context.read<UserProvider>().setUser(User(avatar: e['data']));
         },
       );

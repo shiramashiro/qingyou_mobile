@@ -14,8 +14,8 @@ class RegisterPageService {
   ) {
     Future future = _api.register(_packRegisterFormData(uname, phone, password));
     HttpResponse().handleFutureByLoading(
-      onFutureBefore: () => EasyLoading.show(status: '注册中...'),
-      doFuture: future,
+      onBefore: () => EasyLoading.show(status: '注册中...'),
+      onDoing: future,
     );
   }
 
