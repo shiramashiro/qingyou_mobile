@@ -5,7 +5,6 @@ import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
-import 'package:sqflite/sqflite.dart';
 
 class LoginPageService {
   bool _isUname = false;
@@ -22,14 +21,15 @@ class LoginPageService {
   }
 
   _updateDatabase(Map<String, dynamic> user) async {
-    SQLiteOperation op = SQLiteOperation(table: 'userinfo');
-    bool exists = await op.existence();
-    Database sqlite = await op.connectSQLite();
+    var table = 'userinfo';
+    var op = SQLiteOperation(table: table);
+    var exists = await op.existence();
+    var sqlite = await op.connectSQLite();
     if (exists) {
-      sqlite.update('userinfo', user);
+      sqlite.update(table, user);
     } else {
       op.createTable(model: user);
-      sqlite.insert('userinfo', user);
+      sqlite.insert(table, user);
     }
   }
 

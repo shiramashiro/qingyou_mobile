@@ -46,7 +46,7 @@ class ActionableList extends StatefulWidget {
 class _ActionableListState extends State<ActionableList> {
   Widget _createItem({
     required String label,
-    required String filed,
+    required dynamic filed,
     IconData? iconData,
     OnTap? onTap,
     required CreateActionableListContent content,
