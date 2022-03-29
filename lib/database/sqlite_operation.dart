@@ -19,20 +19,26 @@ class SQLiteOperation {
     required this.table,
   });
 
-  Future<Database> open() async {
-    return await openDatabase(join(await getDatabasesPath(), table));
+  Future<String> _splicePath() async {
+    String databasePath = await getDatabasesPath();
+    String path = join(databasePath, '$table.db');
+    return path;
+  }
+
+  Future<Database> connectSQLite() async {
+    return await openDatabase(await _splicePath());
   }
 
   Future<bool> existence() async {
-    return await databaseExists(table);
+    return await databaseExists(await _splicePath());
   }
 
-  Future _executeSql(
-    String sql,
-  ) async {
+  Future _executeSql(String sql) async {
     await openDatabase(
-      join(await getDatabasesPath(), table),
-      onCreate: (db, version) => db.execute(sql),
+      await _splicePath(),
+      onCreate: (db, version) async {
+        await db.execute(sql);
+      },
       version: 1,
     );
   }
@@ -58,7 +64,7 @@ class SQLiteOperation {
     }
   }
 
-  String _mergeSql(Map<String, dynamic> model, List<FieldConstraint> constraints) {
+  String _mergeSql(Map<String, dynamic> model, List<FieldConstraint>? constraints) {
     String sql = 'CREATE TABLE $table(';
     for (int i = 0; i < model.length; i++) {
       String filedName = model.keys.elementAt(i);
@@ -73,7 +79,7 @@ class SQLiteOperation {
     return sql += ')';
   }
 
-  Future createTable({required Map<String, dynamic> model, required List<FieldConstraint> constraints}) async {
+  Future createTable({required Map<String, dynamic> model, List<FieldConstraint>? constraints}) async {
     await _executeSql(_mergeSql(model, constraints));
   }
 }

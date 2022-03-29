@@ -19,7 +19,7 @@ class HttpResponse {
   };
 
   /// 获取响应的 JSON 数据。
-  dynamic getData(dynamic json) {
+  Map<String, dynamic> getData(dynamic json) {
     return jsonDecode(json.toString());
   }
 
@@ -50,7 +50,9 @@ class HttpResponse {
     onDoing.then((value) {
       EasyLoading.dismiss();
       EasyLoading.showToast(getMsg(value));
-      if (onSuccess != null) onSuccess(getData(value)['data']);
+      if (getData(value)['data'] != null) {
+        if (onSuccess != null) onSuccess(getData(value)['data']);
+      }
     }, onError: (e) {
       EasyLoading.dismiss();
       EasyLoading.showToast('未知错误');

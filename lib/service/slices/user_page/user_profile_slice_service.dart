@@ -8,7 +8,7 @@ import 'package:qingyuo_mobile/apis/http/http_response.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
 import 'package:qingyuo_mobile/providers/user_provider.dart';
 
-class UserPageSliceService {
+class UserProfileSliceService {
   final ImagePicker _picker = ImagePicker();
   final UploadAPI _api = UploadAPI();
 

@@ -39,7 +39,7 @@ class User {
     uname = json['uname'];
     email = json['email'];
     phone = json['phone'];
-    createdDate = json['create_date'];
+    createdDate = json['createdDate'];
     birthday = json['birthday'];
     signature = json['signature'];
     sex = json['sex'];
@@ -58,7 +58,7 @@ class User {
     data['uname'] = uname;
     data['email'] = email;
     data['phone'] = phone;
-    data['create_date'] = createdDate;
+    data['createdDate'] = createdDate;
     data['birthday'] = birthday;
     data['signature'] = signature;
     data['sex'] = sex;

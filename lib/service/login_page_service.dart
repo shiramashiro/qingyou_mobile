@@ -17,23 +17,19 @@ class LoginPageService {
     HttpResponse().handleFutureByLoading(
       onBefore: () => EasyLoading.show(status: '登录中...'),
       onDoing: _api.login(_babelData(password, account)),
-      onSuccess: (e) {
-        _updateDatabase(User.fromJson(e).toJson());
-      },
+      onSuccess: (user) => _updateDatabase(user),
     );
   }
 
   _updateDatabase(Map<String, dynamic> user) async {
-    String table = 'user';
-    SQLiteOperation sqlOp = SQLiteOperation(table: table);
-    Database database = await sqlOp.open();
-    if (!await sqlOp.existence()) {
-      await sqlOp.createTable(model: user, constraints: [
-        FieldConstraint(index: 0, value: 'PRIMARY KEY AUTOINCREMENT'),
-      ]);
-      database.insert(table, user);
+    SQLiteOperation op = SQLiteOperation(table: 'userinfo');
+    bool exists = await op.existence();
+    Database sqlite = await op.connectSQLite();
+    if (exists) {
+      sqlite.update('userinfo', user);
     } else {
-      await database.update(table, user);
+      op.createTable(model: user);
+      sqlite.insert('userinfo', user);
     }
   }
 

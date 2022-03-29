@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qingyuo_mobile/components/actionable_list.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
+import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/providers/user_provider.dart';
-import 'package:qingyuo_mobile/service/user_page_slice_service.dart';
+import 'package:qingyuo_mobile/service/slices/user_page/user_profile_slice_service.dart';
+import 'package:sqflite/sqflite.dart';
 
 class UserProfileSlice extends StatefulWidget {
   const UserProfileSlice({Key? key}) : super(key: key);
@@ -13,15 +15,25 @@ class UserProfileSlice extends StatefulWidget {
 }
 
 class _UserProfileSliceState extends State<UserProfileSlice> {
-  Map<String, dynamic> data = {
-    'uname': '椎名白白',
-    'sex': '男',
-    'signature': 'Time tick away, dream faded away!',
-    'uid': '7021686',
-    'avatar': 'assets/images/95893409_p0.jpg'
-  };
+  late Map<String, dynamic> data = {};
 
-  final UserPageSliceService _service = UserPageSliceService();
+  final UserProfileSliceService _service = UserProfileSliceService();
+
+  @override
+  void initState() {
+    super.initState();
+    _queryUserInfo();
+  }
+
+  _queryUserInfo() async {
+    String table = 'user';
+    SQLiteOperation sqlOp = SQLiteOperation(table: table);
+    Database database = await sqlOp.connectSQLite();
+    var user = await database.query(table);
+    setState(() {
+      data = user[0];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +50,17 @@ class _UserProfileSliceState extends State<UserProfileSlice> {
                 label: '头像',
                 field: 'avatar',
                 onTap: () {
-                  _service.updateAvatar(0, 'shiramashiro', context: context);
+                  // _service.updateAvatar(0, 'shiramashiro', context: context);
+                  /// 1. 请求本地 sqlite 的数据之后，组件要把数据展示出来
+                  /// 2. 直接给一个 data 即可。
+                  /// 3. 修改某一条数据时，如，修改头像
+                  /// 4. 选择图片之后，把图片发送到后台，后台存储图片，后台返回新图片的url给前端。
+                  /// 5. 返回过来的新 url 要修改 data 里的数据。
                 },
                 content: (e) {
-                  var avatar = context.watch<UserProvider>().getUser.avatar;
-                  print(avatar);
+                  // var avatar = context.watch<UserProvider>().getUser.avatar;
                   return Avatar(
-                    url: avatar ?? '',
+                    url: e,
                     size: 55,
                   );
                 },
