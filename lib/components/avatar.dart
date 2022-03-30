@@ -10,9 +10,9 @@ class Avatar extends StatelessWidget {
 
   const Avatar({
     Key? key,
+    this.onTap,
     this.size = 100,
     required this.url,
-    this.onTap,
   }) : super(key: key);
 
   ImageProvider _createImage() {

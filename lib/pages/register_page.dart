@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/utils/roadmap.dart';
+import 'package:qingyuo_mobile/components/app_bar_row_back.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
 import 'package:qingyuo_mobile/components/text_icon.dart';
@@ -28,18 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                Roadmap.pushAndRemoveUntil(context, const LoginPage());
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            const Text('注册'),
-          ],
-        ),
+        title: const AppBarRowBack(title: '登陆', widget: LoginPage()),
       ),
       body: Form(
         key: _formKey,

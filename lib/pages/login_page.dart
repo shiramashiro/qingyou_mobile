@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qingyuo_mobile/components/app_bar_row_back.dart';
 import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
@@ -38,18 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                Roadmap.pushAndRemoveUntil(context, const RootPage());
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            const Text('登陆'),
-          ],
-        ),
+        title: const AppBarRowBack(title: '登陆', widget: RootPage()),
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(0.12.sw, 0.05.sh, 0.12.sw, 0),
@@ -85,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                         UnderlineTextButton(
                           text: '用户注册',
                           onTap: () {
-                            Roadmap.pushAndRemoveUntil(
+                            Roadmap.push(
                               context,
                               const RegisterPage(),
                             );
@@ -99,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: '登录',
                         onTap: () {
                           if ((_formKey.currentState as FormState).validate()) {
-                            _service.login(_password, _account);
+                            _service.login(_password, _account, context);
                           }
                         },
                       ),

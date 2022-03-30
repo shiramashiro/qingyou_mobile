@@ -8,7 +8,7 @@ import 'package:qingyuo_mobile/pages/slices/home_page/hot_video_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/recommend_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/sight_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/tech_slice.dart';
-import 'package:qingyuo_mobile/pages/slices/user_page/user_profile_slice.dart';
+import 'package:qingyuo_mobile/pages/slices/user_page/user_profile.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           url: "assets/images/95893409_p0.jpg",
           size: 40,
           onTap: () {
-            Roadmap.push(context, const UserProfileSlice());
+            Roadmap.push(context, const UserProfile());
           },
         ),
         const IconInInput(

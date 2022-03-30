@@ -17,7 +17,7 @@ class _BootPageState extends State<BootPage> {
 
   void router() {
     _timer.cancel();
-    Roadmap.pushAndRemoveUntil(context, const RootPage());
+    Roadmap.push(context, const RootPage());
   }
 
   Widget countdownButton(

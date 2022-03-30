@@ -3,8 +3,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
+import 'package:qingyuo_mobile/pages/roots/root_page.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
+import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class LoginPageService {
   bool _isUname = false;
@@ -12,24 +14,28 @@ class LoginPageService {
   bool _isEmail = false;
   final CommonAPI _api = CommonAPI();
 
-  void login(TextEditingController password, TextEditingController account) {
+  void login(TextEditingController password, TextEditingController account, BuildContext context) {
     HttpResponse().handleFutureByLoading(
       onBefore: () => EasyLoading.show(status: '登录中...'),
       onDoing: _api.login(_babelData(password, account)),
-      onSuccess: (user) => _updateDatabase(user),
+      onSuccess: (e) {
+        _updateDatabase(e).then((v) {
+          Roadmap.push(context, const RootPage());
+        });
+      },
     );
   }
 
-  _updateDatabase(Map<String, dynamic> user) async {
+  Future _updateDatabase(Map<String, dynamic> user) async {
     var table = 'userinfo';
     var op = SQLiteOperation(table: table);
     var exists = await op.existence();
     var sqlite = await op.connectSQLite();
     if (exists) {
-      sqlite.update(table, user);
+      await sqlite.update(table, user);
     } else {
-      op.createTable(model: user);
-      sqlite.insert(table, user);
+      await op.createTable(model: user);
+      await sqlite.insert(table, user);
     }
   }
 
