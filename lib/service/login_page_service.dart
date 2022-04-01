@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
-import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
-import 'package:qingyuo_mobile/pages/roots/root_page.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
-import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class LoginPageService {
   bool _isUname = false;
@@ -19,24 +16,9 @@ class LoginPageService {
       onBefore: () => EasyLoading.show(status: '登录中...'),
       onDoing: _api.login(_babelData(password, account)),
       onSuccess: (e) {
-        _updateDatabase(e).then((v) {
-          Roadmap.push(context, const RootPage());
-        });
+        // 请求数据成功之后要做的事
       },
     );
-  }
-
-  Future _updateDatabase(Map<String, dynamic> user) async {
-    var table = 'userinfo';
-    var op = SQLiteOperation(table: table);
-    var exists = await op.existence();
-    var sqlite = await op.connectSQLite();
-    if (exists) {
-      await sqlite.update(table, user);
-    } else {
-      await op.createTable(model: user);
-      await sqlite.insert(table, user);
-    }
   }
 
   User _babelData(TextEditingController password, TextEditingController account) {

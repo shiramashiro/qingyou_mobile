@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/pages/login_page.dart';
 import 'package:qingyuo_mobile/providers/user_provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(MultiProvider(

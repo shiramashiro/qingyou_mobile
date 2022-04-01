@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/actionable_list.dart';
 import 'package:qingyuo_mobile/components/app_bar_row_back.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
-import 'package:qingyuo_mobile/database/sqlite_operation.dart';
 import 'package:qingyuo_mobile/pages/roots/root_page.dart';
 import 'package:qingyuo_mobile/pages/slices/user_page/subslice/avatar_preview.dart';
 import 'package:qingyuo_mobile/service/slices/user_page/user_profile_service.dart';
@@ -22,11 +21,6 @@ class _UserProfileState extends State<UserProfile> {
   @override
   void initState() {
     super.initState();
-    _service.queryUserInfo((e) {
-      setState(() {
-        _data = e;
-      });
-    });
   }
 
   @override

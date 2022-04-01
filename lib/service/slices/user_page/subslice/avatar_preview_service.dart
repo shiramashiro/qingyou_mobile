@@ -29,10 +29,5 @@ class AvatarPreviewService {
 
   queryAvatar({required AfterQueryUserInfoSuccess success}) {
     String table = 'userinfo';
-    Common().getDbService(table, (e) async {
-      var data = await e.query(table, columns: ['avatar']);
-      var url = data[0]['avatar'] as String;
-      success(url);
-    });
   }
 }
