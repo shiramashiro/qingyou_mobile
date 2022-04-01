@@ -14,20 +14,11 @@ class AvatarPreview extends StatefulWidget {
 
 class _AvatarPreviewState extends State<AvatarPreview> {
   final AvatarPreviewService _service = AvatarPreviewService();
-
-  /// 默认图片，在网络图片没有加载出来之前，加载默认图片。
   String _imageUrl = 'assets/images/95893409_p0.jpg';
 
   @override
   void initState() {
     super.initState();
-    _service.queryAvatar(success: (e) => _updateImageUrl(e));
-  }
-
-  _updateImageUrl(dynamic e) {
-    setState(() {
-      _imageUrl = e;
-    });
   }
 
   @override

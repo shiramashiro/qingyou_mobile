@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qingyuo_mobile/apis/common_api.dart';
 import 'package:qingyuo_mobile/models/user_model.dart';
+import 'package:qingyuo_mobile/pages/roots/root_page.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
+import 'package:qingyuo_mobile/utils/roadmap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPageService {
   bool _isUname = false;
@@ -15,8 +18,10 @@ class LoginPageService {
     HttpResponse().handleFutureByLoading(
       onBefore: () => EasyLoading.show(status: '登录中...'),
       onDoing: _api.login(_babelData(password, account)),
-      onSuccess: (e) {
-        // 请求数据成功之后要做的事
+      onSuccess: (e) async {
+        var prefs = await SharedPreferences.getInstance();
+        prefs.setString('user_info', e);
+        Roadmap.push(context, const RootPage());
       },
     );
   }

@@ -19,14 +19,18 @@ class HttpResponse {
   };
 
   /// 获取响应的 JSON 数据。
-  Map<String, dynamic> getData(dynamic json) {
+  Map<String, dynamic> decodeJsonString(dynamic json) {
     return jsonDecode(json.toString());
   }
 
+  String encodeJsonString(dynamic object) {
+    return jsonEncode(object);
+  }
+
   /// 通过 _codes 匹配对应的响应数据中 state 字段。匹配成功，就返回相应的消息提示。
-  String getMsg(dynamic json) {
+  String encodeJsonMsg(dynamic json) {
     String result = "";
-    int code = getData(json)['state'];
+    int code = decodeJsonString(json)['state'];
     _codes.forEach((key, value) {
       if (code == key) {
         result = value;
@@ -47,11 +51,14 @@ class HttpResponse {
     OnFutureSuccess? onSuccess,
   }) {
     if (onBefore != null) onBefore();
-    onDoing.then((value) {
+
+    onDoing.then((e) {
       EasyLoading.dismiss();
-      EasyLoading.showToast(getMsg(value));
-      if (getData(value)['data'] != null) {
-        if (onSuccess != null) onSuccess(getData(value)['data']);
+      EasyLoading.showToast(encodeJsonMsg(e));
+
+      var data = decodeJsonString(e)['data'];
+      if (data != null && onSuccess != null) {
+        onSuccess(encodeJsonString(data));
       }
     }, onError: (e) {
       EasyLoading.dismiss();

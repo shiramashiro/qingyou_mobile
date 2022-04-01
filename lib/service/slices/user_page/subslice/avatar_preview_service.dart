@@ -4,8 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
 import 'package:qingyuo_mobile/apis/upload_api.dart';
-import 'package:qingyuo_mobile/utils/callbacks.dart';
-import 'package:qingyuo_mobile/service/slices/user_page/common/common.dart';
 
 class AvatarPreviewService {
   final ImagePicker _picker = ImagePicker();
@@ -25,9 +23,5 @@ class AvatarPreviewService {
         onSuccess: (e) {},
       );
     }
-  }
-
-  queryAvatar({required AfterQueryUserInfoSuccess success}) {
-    String table = 'userinfo';
   }
 }

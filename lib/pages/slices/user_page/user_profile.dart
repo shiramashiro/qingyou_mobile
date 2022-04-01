@@ -16,11 +16,21 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   final UserProfileSliceService _service = UserProfileSliceService();
-  Map<String, Object?> _data = {'uname': '', 'sex': '', 'signature': '', 'id': 0, 'avatar': 'assets/images/95893409_p0.jpg'};
+  Map<String, Object?> _userData = {'uname': '', 'sex': '', 'signature': '', 'id': 0, 'avatar': 'assets/images/95893409_p0.jpg'};
+
+
 
   @override
   void initState() {
     super.initState();
+    _setUserData();
+  }
+
+  _setUserData() async {
+    var userData = await _service.getUser(where: ['id', 'uname', 'avatar', 'signature', 'sex']);
+    setState(() {
+      _userData = userData;
+    });
   }
 
   @override
@@ -32,7 +42,7 @@ class _UserProfileState extends State<UserProfile> {
       body: Column(
         children: [
           ActionableList(
-            data: _data,
+            data: _userData,
             template: [
               ActionableListTemplate(
                 label: '头像',

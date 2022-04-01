@@ -12,10 +12,9 @@ class RegisterPageService {
     TextEditingController phone,
     TextEditingController password,
   ) {
-    Future future = _api.register(_packRegisterFormData(uname, phone, password));
     HttpResponse().handleFutureByLoading(
       onBefore: () => EasyLoading.show(status: '注册中...'),
-      onDoing: future,
+      onDoing: _api.register(_packRegisterFormData(uname, phone, password)),
     );
   }
 
