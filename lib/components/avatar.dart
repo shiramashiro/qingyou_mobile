@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/utils/callbacks.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 
-typedef OnTap = void Function();
-
-class Avatar extends StatelessWidget {
+class Avatar extends StatefulWidget {
   final double size;
   final String url;
   final OnTap? onTap;
@@ -15,23 +14,32 @@ class Avatar extends StatelessWidget {
     required this.url,
   }) : super(key: key);
 
-  ImageProvider _createImage() {
+  @override
+  State<Avatar> createState() => _AvatarState();
+}
+
+class _AvatarState extends State<Avatar> {
+  Widget _createImage() {
+    String url = widget.url;
     if (Detection.detectUrl(url)) {
-      return NetworkImage(url);
+      NetworkImage image = NetworkImage(url);
+      image.evict();
+      return Image(image: image, fit: BoxFit.cover);
     } else {
-      return AssetImage(url);
+      return Image.asset(url, fit: BoxFit.cover);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: CircleAvatar(
-          backgroundImage: _createImage(),
+      onTap: widget.onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: SizedBox(
+          width: widget.size,
+          height: widget.size,
+          child: _createImage(),
         ),
       ),
     );
