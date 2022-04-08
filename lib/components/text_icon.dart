@@ -34,7 +34,7 @@ class TextIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             iconPath == null
-                ? Icon(icon)
+                ? Icon(icon, size: iconSize)
                 : Image(
                     image: AssetImage(iconPath!),
                     width: iconSize,

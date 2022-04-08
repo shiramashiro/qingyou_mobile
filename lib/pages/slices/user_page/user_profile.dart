@@ -3,7 +3,9 @@ import 'package:qingyuo_mobile/components/actionable_list.dart';
 import 'package:qingyuo_mobile/components/app_bar_row_back.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/pages/roots/root_page.dart';
+import 'package:qingyuo_mobile/pages/slices/user_page/subslice/uname_editing.dart';
 import 'package:qingyuo_mobile/service/slices/user_page/user_profile_service.dart';
+import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -13,7 +15,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final UserProfileSliceService _service = UserProfileSliceService();
+  final UserProfileService _service = UserProfileService();
   Map<String, Object?> _userData = {'uname': '', 'sex': '', 'signature': '', 'id': '', 'avatar': 'assets/images/95893409_p0.jpg'};
 
   @override
@@ -51,6 +53,9 @@ class _UserProfileState extends State<UserProfile> {
               ActionableListTemplate(
                 label: '昵称',
                 field: 'uname',
+                onTap: () {
+                  Roadmap.push(context, const UnameEditing());
+                },
                 content: (e) => Text(e, style: const TextStyle(color: Colors.grey)),
               ),
               ActionableListTemplate(

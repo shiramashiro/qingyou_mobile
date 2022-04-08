@@ -5,8 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qingyuo_mobile/apis/http/http_response.dart';
 import 'package:qingyuo_mobile/apis/prefs/user_prefs.dart';
 import 'package:qingyuo_mobile/apis/upload_api.dart';
+import 'package:qingyuo_mobile/models/user_model.dart';
 
-class UserProfileSliceService {
+class UserProfileService {
   final ImagePicker _picker = ImagePicker();
   final UserPrefs _prefs = UserPrefs();
   final UploadAPI _api = UploadAPI();
@@ -24,5 +25,9 @@ class UserProfileSliceService {
 
   Future<Map<String, Object?>> getUser({List<String>? where}) {
     return _prefs.getUser(where);
+  }
+
+  updateUname(User user) {
+
   }
 }
