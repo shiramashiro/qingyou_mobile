@@ -9,6 +9,7 @@ import 'package:qingyuo_mobile/pages/slices/home_page/recommend_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/sight_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/tech_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/user_page/user_profile.dart';
+import 'package:qingyuo_mobile/service/home_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,13 +20,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomePageService _service = HomePageService();
+  Map<String, Object?> _userData = {'avatar': 'assets/images/95893409_p0.jpg'};
+
+  @override
+  void initState() {
+    super.initState();
+    _setUserData();
+  }
+
+  _setUserData() async {
+    var userData = await _service.getUser(where: ['avatar']);
+    setState(() {
+      _userData = userData;
+    });
+  }
+
   Widget _createTitle() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Avatar(
-          url: "assets/images/95893409_p0.jpg",
+          url: _userData['avatar'].toString(),
           size: 40,
           onTap: () {
             Roadmap.push(context, const UserProfile());

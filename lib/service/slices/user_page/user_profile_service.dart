@@ -1,32 +1,28 @@
-import 'dart:convert';
-
-import 'package:qingyuo_mobile/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:qingyuo_mobile/apis/http/http_response.dart';
+import 'package:qingyuo_mobile/apis/prefs/user_prefs.dart';
+import 'package:qingyuo_mobile/apis/upload_api.dart';
 
 class UserProfileSliceService {
-  Future<Map<String, Object?>> getUser({List<String>? where}) async {
-    var prefs = await SharedPreferences.getInstance();
-    var jsonString = prefs.getString('user_info');
-    var userObject = User.fromJson(jsonDecode(jsonString!));
-    if (where != null) {
-      return _matchesWithWhere(userObject, where);
-    } else {
-      return userObject.toJson();
+  final ImagePicker _picker = ImagePicker();
+  final UserPrefs _prefs = UserPrefs();
+  final UploadAPI _api = UploadAPI();
+
+  void updateAvatar(int uid, String uname, {required BuildContext context}) async {
+    XFile? img = await _picker.pickImage(source: ImageSource.gallery);
+    if (img != null) {
+      var file = await MultipartFile.fromFile(img.path, filename: img.name);
+      HttpResponse().handleFutureByLoading(
+        onBefore: () => EasyLoading.show(status: '上传中...'),
+        onDoing: _api.updateAvatar(FormData.fromMap({'uid': uid, 'uname': uname, 'file': file})),
+      );
     }
   }
 
-  Map<String, Object?> _matchesWithWhere(User sourceObject, List<String> where) {
-    Map<String, Object?> resultMap = {};
-    var sourceMap = sourceObject.toJson();
-    for (int i = 0; i < where.length; i++) {
-      for (int j = 0; j < sourceMap.keys.length; j++) {
-        var key = sourceMap.keys.elementAt(j);
-        if (where[i] == key) {
-          var value = sourceMap.values.elementAt(j);
-          resultMap[key] = value;
-        }
-      }
-    }
-    return resultMap;
+  Future<Map<String, Object?>> getUser({List<String>? where}) {
+    return _prefs.getUser(where);
   }
 }
