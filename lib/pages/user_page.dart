@@ -50,17 +50,12 @@ class _UserPageState extends State<UserPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
-          children: [
-            TextIcon(text: '旅游札记', icon: Icons.seven_k, iconSize: 20),
-            TextIcon(text: '模拟计算器', icon: Icons.seven_k, iconSize: 20),
-            TextIcon(text: '观测枢', icon: Icons.seven_k, iconSize: 20),
+          children: const [
+            TextIcon(text: '旅游札记', iconPath: "assets/icons/history.svg", iconType: 'svg'),
           ],
         ),
         Row(
           children: [
-            TextIcon(text: '轻游铺', icon: Icons.seven_k, iconSize: 20),
-            TextIcon(text: '炼金台', icon: Icons.seven_k, iconSize: 20),
-            TextIcon(text: '地图', icon: Icons.seven_k, iconSize: 20),
           ],
         )
       ],

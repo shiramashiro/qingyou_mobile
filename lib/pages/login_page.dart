@@ -105,9 +105,9 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                TextIcon(iconPath: "assets/icons/alipay.png", text: "支付宝"),
-                TextIcon(iconPath: "assets/icons/wechat.png", text: "微信"),
-                TextIcon(iconPath: "assets/icons/qq.png", text: "QQ"),
+                TextIcon(iconPath: "assets/icons/alipay.svg", iconType: 'svg', text: "支付宝"),
+                TextIcon(iconPath: "assets/icons/wechat.svg", iconType: 'svg', text: "微信"),
+                TextIcon(iconPath: "assets/icons/qq.svg", iconType: 'svg', text: "QQ"),
               ],
             ),
           ],
