@@ -27,9 +27,8 @@ class ActionableIcon extends StatelessWidget {
   }) : super(key: key);
 
   Widget _createIcon() {
-    Widget result = Container();
     if (Detection.detectSvg(path)) {
-      result = SvgPicture.asset(
+      return SvgPicture.asset(
         path,
         width: iconSize,
         height: iconSize,
@@ -37,14 +36,13 @@ class ActionableIcon extends StatelessWidget {
         fit: BoxFit.cover,
       );
     } else {
-      result = Image(
+      return Image(
         image: AssetImage(path),
         fit: BoxFit.cover,
         width: iconSize,
         height: iconSize,
       );
     }
-    return result;
   }
 
   Widget _createText() {

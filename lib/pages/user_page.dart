@@ -33,10 +33,7 @@ class _UserPageState extends State<UserPage> {
 
   Widget _createUserPlank() {
     return FloatingDatum(
-      ptop: 20,
-      pbottom: 20,
-      pleft: 10,
-      pright: 10,
+      decoration: const FloatingDatumDecoration(padding: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,8 +47,11 @@ class _UserPageState extends State<UserPage> {
 
   Widget _createUserUtils() {
     return FloatingDatum(
-      mtop: 20,
-      padding: 10,
+      title: FloatingDatumTitle(
+        title: const Text("常用工具"),
+        decoration: const FloatingDatumDecoration(mbottom: 10, mleft: 10),
+      ),
+      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
       child: Column(
         children: [
           Row(
@@ -81,7 +81,23 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _createUserService() {
-    return Container();
+    return FloatingDatum(
+      title: FloatingDatumTitle(
+        title: const Text("用户服务"),
+        decoration: const FloatingDatumDecoration(mleft: 10, mbottom: 10),
+      ),
+      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          ActionableIcon(text: '浏览历史', path: "assets/icons/history.svg"),
+          ActionableIcon(text: '我的收藏', path: "assets/icons/collection.svg"),
+          ActionableIcon(text: '创作平台', path: "assets/icons/write_platform.svg"),
+          ActionableIcon(text: '个性装扮', path: "assets/icons/dressing.svg"),
+        ],
+      ),
+    );
   }
 
   Widget _createUserExploration() {
@@ -99,8 +115,8 @@ class _UserPageState extends State<UserPage> {
           child: Column(
             children: [
               _createUserPlank(),
-              _createUserUtils(),
               _createUserService(),
+              _createUserUtils(),
               _createUserExploration(),
             ],
           ),

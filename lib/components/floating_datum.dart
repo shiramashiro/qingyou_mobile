@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FloatingDatum extends StatelessWidget {
-  final Widget child;
+class FloatingDatumDecoration {
   final double mtop;
   final double mleft;
   final double mright;
@@ -10,14 +9,10 @@ class FloatingDatum extends StatelessWidget {
   final double pleft;
   final double pright;
   final double pbottom;
-  final Color color;
-  final double radius;
-  final double? padding;
+  final double padding;
+  final double margin;
 
-  const FloatingDatum({
-    Key? key,
-    required this.child,
-    this.color = Colors.white,
+  const FloatingDatumDecoration({
     this.mtop = 0,
     this.mleft = 0,
     this.mright = 0,
@@ -26,20 +21,84 @@ class FloatingDatum extends StatelessWidget {
     this.pleft = 0,
     this.pright = 0,
     this.pbottom = 0,
-    this.radius = 10,
-    this.padding,
-  }) : super(key: key);
+    this.padding = 0,
+    this.margin = 0,
+  });
+}
 
-  EdgeInsetsGeometry _createPadding() {
-    if (padding != null) {
-      return EdgeInsets.all(padding!);
+class FloatingDatumBox {
+  EdgeInsetsGeometry padding(FloatingDatumDecoration decoration) {
+    if (decoration.padding > 0) {
+      return EdgeInsets.all(decoration.padding);
     } else {
       return EdgeInsets.only(
-        top: ptop,
-        left: pleft,
-        right: pright,
-        bottom: pbottom,
+        top: decoration.ptop,
+        left: decoration.pleft,
+        right: decoration.pright,
+        bottom: decoration.pbottom,
       );
+    }
+  }
+
+  EdgeInsetsGeometry margin(FloatingDatumDecoration decoration) {
+    if (decoration.margin > 0) {
+      return EdgeInsets.all(decoration.margin);
+    } else {
+      return EdgeInsets.only(
+        top: decoration.mtop,
+        left: decoration.mleft,
+        right: decoration.mright,
+        bottom: decoration.mbottom,
+      );
+    }
+  }
+}
+
+class FloatingDatumTitle extends StatelessWidget {
+  final FloatingDatumDecoration decoration;
+  final Widget title;
+
+  final FloatingDatumBox _box = FloatingDatumBox();
+
+  FloatingDatumTitle({
+    Key? key,
+    required this.decoration,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: _box.padding(decoration),
+      margin: _box.margin(decoration),
+      child: title,
+    );
+  }
+}
+
+class FloatingDatum extends StatelessWidget {
+  final Widget child;
+  final Color color;
+  final double radius;
+  final FloatingDatumTitle? title;
+  final FloatingDatumDecoration decoration;
+
+  final FloatingDatumBox _box = FloatingDatumBox();
+
+  FloatingDatum({
+    Key? key,
+    required this.child,
+    this.color = Colors.white,
+    this.radius = 10,
+    this.title,
+    required this.decoration,
+  }) : super(key: key);
+
+  Widget _createTitle() {
+    if (title != null) {
+      return title!;
+    } else {
+      return Container();
     }
   }
 
@@ -48,16 +107,14 @@ class FloatingDatum extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(radius),
       ),
-      padding: _createPadding(),
-      margin: EdgeInsets.only(
-        top: mtop,
-        left: mleft,
-        right: mright,
-        bottom: mbottom,
+      padding: _box.padding(decoration),
+      margin: _box.margin(decoration),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [_createTitle(), child],
       ),
-      child: child,
     );
   }
 }
