@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/actionable_icon.dart';
+import 'package:qingyuo_mobile/components/floating_datum.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -31,8 +32,11 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _createUserPlank() {
-    return Container(
-      height: 100,
+    return FloatingDatum(
+      ptop: 20,
+      pbottom: 20,
+      pleft: 10,
+      pright: 10,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,27 +49,34 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _createUserUtils() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            ActionableIcon(text: '浏览历史', path: "assets/icons/history.svg"),
-            ActionableIcon(text: '模拟计算器', path: "assets/icons/history.svg", holeSize: 60),
-            ActionableIcon(text: '观测枢', path: "assets/icons/history.svg"),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            ActionableIcon(text: '轻游铺', path: "assets/icons/history.svg"),
-            ActionableIcon(text: '炼金台', path: "assets/icons/history.svg"),
-            ActionableIcon(text: '地图', path: "assets/icons/history.svg"),
-          ],
-        ),
-      ],
+    return FloatingDatum(
+      mtop: 20,
+      padding: 10,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              ActionableIcon(text: '札记', path: "assets/icons/notes.svg"),
+              ActionableIcon(text: '计算器', path: "assets/icons/computer.svg"),
+              ActionableIcon(text: '观测枢', path: "assets/icons/telescope.svg"),
+            ],
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                ActionableIcon(text: '轻游铺', path: "assets/icons/shop.svg"),
+                ActionableIcon(text: '炼金台', path: "assets/icons/laboratory.svg"),
+                ActionableIcon(text: '地图', path: "assets/icons/map.svg"),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -81,13 +92,19 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          _createUserPlank(),
-          _createUserUtils(),
-          _createUserService(),
-          _createUserExploration(),
-        ],
+      body: Container(
+        color: const Color.fromRGBO(239, 239, 239, 0.8),
+        child: Container(
+          margin: const EdgeInsets.only(top: 20, left: 15, right: 15),
+          child: Column(
+            children: [
+              _createUserPlank(),
+              _createUserUtils(),
+              _createUserService(),
+              _createUserExploration(),
+            ],
+          ),
+        ),
       ),
     );
   }
