@@ -9,14 +9,16 @@ class ActionableIcon extends StatelessWidget {
   final double iconSize;
   final double fontSize;
   final String? text;
-  final String path;
+  final String? path;
   final Color textColor;
   final OnTap? onTap;
   final Color? svgColor;
+  final IconData? iconData;
 
   const ActionableIcon({
     Key? key,
-    required this.path,
+    this.path,
+    this.iconData,
     this.text,
     this.holeSize = 55,
     this.iconSize = 30,
@@ -27,22 +29,30 @@ class ActionableIcon extends StatelessWidget {
   }) : super(key: key);
 
   Widget _createIcon() {
-    if (Detection.detectSvg(path)) {
-      return SvgPicture.asset(
-        path,
-        width: iconSize,
-        height: iconSize,
-        color: svgColor,
-        fit: BoxFit.cover,
-      );
+    Widget widget = Container();
+    if (iconData != null) {
+      widget = Icon(iconData);
     } else {
-      return Image(
-        image: AssetImage(path),
-        fit: BoxFit.cover,
-        width: iconSize,
-        height: iconSize,
-      );
+      if (path != null) {
+        if (Detection.detectSvg(path!)) {
+          widget = SvgPicture.asset(
+            path!,
+            width: iconSize,
+            height: iconSize,
+            color: svgColor,
+            fit: BoxFit.cover,
+          );
+        } else {
+          widget = Image(
+            image: AssetImage(path!),
+            fit: BoxFit.cover,
+            width: iconSize,
+            height: iconSize,
+          );
+        }
+      }
     }
+    return widget;
   }
 
   Widget _createText() {

@@ -31,7 +31,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _createUserPlank() {
+  Widget _createUserData() {
     return FloatingDatum(
       decoration: const FloatingDatumDecoration(padding: 10),
       child: Row(
@@ -45,7 +45,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _createUserUtils() {
+  Widget _createCommonUtils() {
     return FloatingDatum(
       title: FloatingDatumTitle(
         title: const Text("常用工具"),
@@ -80,7 +80,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _createUserService() {
+  Widget _createBasicService() {
     return FloatingDatum(
       title: FloatingDatumTitle(
         title: const Text("用户服务"),
@@ -100,24 +100,57 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _createUserExploration() {
+  Widget _createReferralService() {
+    return FloatingDatum(
+      title: FloatingDatumTitle(
+        title: const Text("推荐服务"),
+        decoration: const FloatingDatumDecoration(mleft: 10, mbottom: 10),
+      ),
+      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          ActionableIcon(text: '我的课程', path: "assets/icons/classes.svg"),
+          ActionableIcon(text: '轻游公益', path: "assets/icons/public_welfare.svg"),
+          ActionableIcon(text: '我的钱包', path: "assets/icons/wallet.svg"),
+          ActionableIcon(text: '时光机', path: "assets/icons/time_machine.svg"),
+        ],
+      ),
+    );
+  }
+
+  Widget _createMoreService() {
     return Container();
+  }
+
+  Widget _createAppBarTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: const [
+        ActionableIcon(iconData: Icons.task),
+        ActionableIcon(iconData: Icons.timer),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: _createAppBarTitle(),
+      ),
       body: Container(
         color: const Color.fromRGBO(239, 239, 239, 0.8),
         child: Container(
           margin: const EdgeInsets.only(top: 20, left: 15, right: 15),
           child: Column(
             children: [
-              _createUserPlank(),
-              _createUserService(),
-              _createUserUtils(),
-              _createUserExploration(),
+              _createUserData(),
+              _createBasicService(),
+              _createCommonUtils(),
+              _createReferralService(),
+              _createMoreService(),
             ],
           ),
         ),

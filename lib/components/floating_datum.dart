@@ -87,11 +87,11 @@ class FloatingDatum extends StatelessWidget {
 
   FloatingDatum({
     Key? key,
+    required this.decoration,
     required this.child,
     this.color = Colors.white,
     this.radius = 10,
     this.title,
-    required this.decoration,
   }) : super(key: key);
 
   Widget _createTitle() {
