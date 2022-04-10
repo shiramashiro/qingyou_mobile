@@ -10,6 +10,7 @@ class HttpResponse {
     2001: '注册成功',
     2002: '登陆成功',
     2004: '上传成功',
+    2005: '用户名修改成功',
     5000: '手机号不正确',
     5001: '用户名不正确',
     5002: '电子邮箱不正确',
@@ -55,7 +56,6 @@ class HttpResponse {
     onDoing.then((e) {
       EasyLoading.dismiss();
       EasyLoading.showToast(encodeJsonMsg(e));
-
       var data = decodeJsonString(e)['data'];
       if (data != null && onSuccess != null) {
         onSuccess(encodeJsonString(data));

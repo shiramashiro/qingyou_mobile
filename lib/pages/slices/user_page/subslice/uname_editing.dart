@@ -31,7 +31,7 @@ class _UnameEditingState extends State<UnameEditing> {
     return TextFormField(
       controller: _uname,
       minLines: 1,
-      obscureText: true,
+      obscureText: false,
       decoration: const InputDecoration(hintText: '请输入新的用户名'),
     );
   }
@@ -45,7 +45,7 @@ class _UnameEditingState extends State<UnameEditing> {
           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
         ),
         onPressed: () {
-          _service.updateUname(User(uname: _uname.text, id: 0));
+          _service.updateUname(User(uname: _uname.text, id: 6));
         },
       ),
     );

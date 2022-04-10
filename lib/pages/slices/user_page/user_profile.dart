@@ -25,7 +25,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   _setUserData() async {
-    var userData = await _service.getUser(where: ['id', 'uname', 'avatar', 'signature', 'sex']);
+    var userData = await _service.getUser();
     setState(() {
       _userData = userData;
     });
