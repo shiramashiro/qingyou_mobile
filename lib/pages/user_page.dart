@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
-import 'package:qingyuo_mobile/components/text_icon.dart';
+import 'package:qingyuo_mobile/components/actionable_icon.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -46,18 +46,25 @@ class _UserPageState extends State<UserPage> {
 
   Widget _createUserUtils() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
-            TextIcon(text: '旅游札记', iconPath: "assets/icons/history.svg", iconType: 'svg'),
+            ActionableIcon(text: '浏览历史', path: "assets/icons/history.svg"),
+            ActionableIcon(text: '模拟计算器', path: "assets/icons/history.svg", holeSize: 60),
+            ActionableIcon(text: '观测枢', path: "assets/icons/history.svg"),
           ],
         ),
         Row(
-          children: [
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            ActionableIcon(text: '轻游铺', path: "assets/icons/history.svg"),
+            ActionableIcon(text: '炼金台', path: "assets/icons/history.svg"),
+            ActionableIcon(text: '地图', path: "assets/icons/history.svg"),
           ],
-        )
+        ),
       ],
     );
   }

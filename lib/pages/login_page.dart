@@ -5,7 +5,7 @@ import 'package:qingyuo_mobile/service/login_page_service.dart';
 import 'package:qingyuo_mobile/utils/roadmap.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
-import 'package:qingyuo_mobile/components/text_icon.dart';
+import 'package:qingyuo_mobile/components/actionable_icon.dart';
 import 'package:qingyuo_mobile/components/underline_text_button.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
@@ -105,9 +105,9 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                TextIcon(iconPath: "assets/icons/alipay.svg", iconType: 'svg', text: "支付宝"),
-                TextIcon(iconPath: "assets/icons/wechat.svg", iconType: 'svg', text: "微信"),
-                TextIcon(iconPath: "assets/icons/qq.svg", iconType: 'svg', text: "QQ"),
+                ActionableIcon(path: "assets/icons/alipay.svg", text: "支付宝"),
+                ActionableIcon(path: "assets/icons/wechat.svg", text: "微信"),
+                ActionableIcon(path: "assets/icons/qq.svg", text: "QQ"),
               ],
             ),
           ],

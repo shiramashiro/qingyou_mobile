@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/utils/callbacks.dart';
 
+/// 可操作性列表
 class ActionableListTemplate {
   final bool isIcon;
   final String label;

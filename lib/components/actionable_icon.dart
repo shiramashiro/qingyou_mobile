@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qingyuo_mobile/utils/callbacks.dart';
+import 'package:qingyuo_mobile/utils/detection.dart';
 
-class TextIcon extends StatelessWidget {
+/// 多功能图标
+class ActionableIcon extends StatelessWidget {
   final double holeSize;
   final double iconSize;
   final double fontSize;
-  final String text;
-  final String iconPath;
+  final String? text;
+  final String path;
   final Color textColor;
   final OnTap? onTap;
-  final String? iconType;
   final Color? svgColor;
 
-  const TextIcon({
+  const ActionableIcon({
     Key? key,
-    this.iconType = "normal",
-    required this.iconPath,
-    required this.text,
+    required this.path,
+    this.text,
     this.holeSize = 55,
     this.iconSize = 30,
     this.fontSize = 12,
@@ -28,22 +28,37 @@ class TextIcon extends StatelessWidget {
 
   Widget _createIcon() {
     Widget result = Container();
-    if (iconType == 'svg') {
+    if (Detection.detectSvg(path)) {
       result = SvgPicture.asset(
-        iconPath,
+        path,
         width: iconSize,
         height: iconSize,
         color: svgColor,
-        semanticsLabel: 'a svg.',
+        fit: BoxFit.cover,
       );
-    } else if (iconType == 'normal') {
+    } else {
       result = Image(
-        image: AssetImage(iconPath),
+        image: AssetImage(path),
+        fit: BoxFit.cover,
         width: iconSize,
         height: iconSize,
       );
     }
-    return Container(child: result);
+    return result;
+  }
+
+  Widget _createText() {
+    Widget result = Container();
+    if (text != null) {
+      result = Text(
+        text!,
+        style: TextStyle(
+          fontSize: fontSize,
+          color: textColor,
+        ),
+      );
+    }
+    return result;
   }
 
   @override
@@ -57,13 +72,7 @@ class TextIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _createIcon(),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: fontSize,
-                color: textColor,
-              ),
-            ),
+            _createText(),
           ],
         ),
       ),

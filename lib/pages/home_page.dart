@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qingyuo_mobile/components/actionable_icon.dart';
 
 import 'package:qingyuo_mobile/components/avatar.dart';
-import 'package:qingyuo_mobile/components/clickable_icon.dart';
 import 'package:qingyuo_mobile/components/icon_in_input.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/hot_post_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/hot_video_slice.dart';
@@ -56,8 +56,8 @@ class _HomePageState extends State<HomePage> {
             fontSize: 12,
           ),
         ),
-        const ClickableIcon(icon: Icons.camera),
-        const ClickableIcon(icon: Icons.email)
+        const ActionableIcon(path: "assets/icons/pick_image.svg", holeSize: 30),
+        const ActionableIcon(path: "assets/icons/message.svg", holeSize: 30),
       ],
     );
   }

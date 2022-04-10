@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/app_bar_row_back.dart';
 import 'package:qingyuo_mobile/components/circle_button.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
-import 'package:qingyuo_mobile/components/text_icon.dart';
+import 'package:qingyuo_mobile/components/actionable_icon.dart';
 import 'package:qingyuo_mobile/components/text_divider.dart';
 import 'package:qingyuo_mobile/service/register_page_service.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
@@ -86,9 +86,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    TextIcon(iconPath: "assets/icons/alipay.png", text: "支付宝"),
-                    TextIcon(iconPath: "assets/icons/wechat.png", text: "微信"),
-                    TextIcon(iconPath: "assets/icons/qq.png", text: "QQ"),
+                    ActionableIcon(path: "assets/icons/alipay.png", text: "支付宝"),
+                    ActionableIcon(path: "assets/icons/wechat.png", text: "微信"),
+                    ActionableIcon(path: "assets/icons/qq.png", text: "QQ"),
                   ],
                 ),
               ),

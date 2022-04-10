@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/utils/callbacks.dart';
 import 'package:qingyuo_mobile/utils/detection.dart';
 
+/// 头像
 class Avatar extends StatefulWidget {
   final double size;
   final String url;

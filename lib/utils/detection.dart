@@ -16,6 +16,8 @@ class RegExpValues {
 
   static const String url =
       r"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$";
+
+  static const String svg = r"\.svg$";
 }
 
 /// 保存着各种提示消息，比如，手机号的格式错误、电子邮箱的格式错误等。
@@ -85,5 +87,9 @@ class Detection {
 
   static bool detectUrl(String e) {
     return Detection.match(e, RegExpValues.url);
+  }
+
+  static bool detectSvg(String e) {
+    return Detection.match(e, RegExpValues.svg);
   }
 }
