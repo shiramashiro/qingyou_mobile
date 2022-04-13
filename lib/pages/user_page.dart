@@ -13,24 +13,6 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   Map<String, Object?> _data = {'uname': 'shiramashiro', 'sex': '', 'signature': '', 'id': '', 'avatar': 'assets/images/95893409_p0.jpg'};
 
-  Widget _createUserBrief() {
-    return Container(
-      margin: const EdgeInsets.only(left: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(_data['uname'].toString()),
-          Text('正式会员'),
-          // 钱包信息
-          Row(
-            children: [Text('B币： 0.0'), Text('硬币：177')],
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _createUserData() {
     return FloatingDatum(
       decoration: const FloatingDatumDecoration(padding: 10),
@@ -39,7 +21,18 @@ class _UserPageState extends State<UserPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Avatar(url: 'assets/images/95893409_p0.jpg', size: 60),
-          _createUserBrief(),
+          Container(
+            margin: const EdgeInsets.only(left: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(_data['uname'].toString()),
+                const Text('正式会员'),
+                const Text('游币：0.0')
+              ],
+            ),
+          ),
         ],
       ),
     );

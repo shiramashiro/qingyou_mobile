@@ -31,7 +31,12 @@ class FormInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: marginLeft, top: marginTop, right: marginRight, bottom: marginBottom, ),
+      margin: EdgeInsets.only(
+        left: marginLeft,
+        top: marginTop,
+        right: marginRight,
+        bottom: marginBottom,
+      ),
       height: 80,
       child: TextFormField(
         controller: controller,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/actionable_icon.dart';
-
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/icon_in_input.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/hot_post_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/hot_video_slice.dart';
-import 'package:qingyuo_mobile/pages/slices/home_page/recommend_slice.dart';
+import 'package:qingyuo_mobile/pages/slices/home_page/plan_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/sight_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/home_page/tech_slice.dart';
 import 'package:qingyuo_mobile/pages/slices/user_page/user_profile.dart';
@@ -72,13 +71,13 @@ class _HomePageState extends State<HomePage> {
           title: _createTitle(),
           bottom: const TabBar(
             isScrollable: true,
-            tabs: [Text('热门贴子'), Text('推荐'), Text('热门视频'), Text('美景'), Text('技术')],
+            tabs: [Text('热门贴子'), Text('计划'), Text('热门视频'), Text('美景'), Text('技术')],
           ),
         ),
         body: const TabBarView(
           children: [
             HotPostSlice(),
-            RecommendSlice(),
+            PlanSlice(),
             HotVideoSlice(),
             SightSlice(),
             TechSlice(),
