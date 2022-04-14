@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qingyuo_mobile/components/avatar.dart';
 import 'package:qingyuo_mobile/components/actionable_icon.dart';
 import 'package:qingyuo_mobile/components/floating_datum.dart';
+import 'package:qingyuo_mobile/components/decoration/decoration.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _UserPageState extends State<UserPage> {
 
   Widget _createUserData() {
     return FloatingDatum(
-      decoration: const FloatingDatumDecoration(padding: 10),
+      decoration: const BoxPropertiesDecoration(padding: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,9 +43,9 @@ class _UserPageState extends State<UserPage> {
     return FloatingDatum(
       title: FloatingDatumTitle(
         title: const Text("常用工具"),
-        decoration: const FloatingDatumDecoration(mbottom: 10, mleft: 10),
+        decoration: const BoxPropertiesDecoration(mbottom: 10, mleft: 10),
       ),
-      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
+      decoration: const BoxPropertiesDecoration(padding: 10, mtop: 10),
       child: Column(
         children: [
           Row(
@@ -77,9 +78,9 @@ class _UserPageState extends State<UserPage> {
     return FloatingDatum(
       title: FloatingDatumTitle(
         title: const Text("用户服务"),
-        decoration: const FloatingDatumDecoration(mleft: 10, mbottom: 10),
+        decoration: const BoxPropertiesDecoration(mleft: 10, mbottom: 10),
       ),
-      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
+      decoration: const BoxPropertiesDecoration(padding: 10, mtop: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,9 +98,9 @@ class _UserPageState extends State<UserPage> {
     return FloatingDatum(
       title: FloatingDatumTitle(
         title: const Text("推荐服务"),
-        decoration: const FloatingDatumDecoration(mleft: 10, mbottom: 10),
+        decoration: const BoxPropertiesDecoration(mleft: 10, mbottom: 10),
       ),
-      decoration: const FloatingDatumDecoration(padding: 10, mtop: 10),
+      decoration: const BoxPropertiesDecoration(padding: 10, mtop: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

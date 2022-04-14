@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qingyuo_mobile/components/circle_button.dart';
+import 'package:qingyuo_mobile/components/decoration/decoration.dart';
 import 'package:qingyuo_mobile/components/floating_datum.dart';
 import 'package:qingyuo_mobile/components/form_input.dart';
+import 'package:qingyuo_mobile/components/revision_elevated_button.dart';
 
 class PlanSlice extends StatefulWidget {
   const PlanSlice({Key? key}) : super(key: key);
@@ -12,11 +13,13 @@ class PlanSlice extends StatefulWidget {
 
 class _PlanSliceState extends State<PlanSlice> {
   final TextEditingController _address = TextEditingController();
-  final TextEditingController _num = TextEditingController();
+  final TextEditingController _customerNum = TextEditingController();
+  final TextEditingController _days = TextEditingController();
+  final TextEditingController _beginDate = TextEditingController();
 
   Widget _createHeader() {
     return FloatingDatum(
-      decoration: const FloatingDatumDecoration(ptop: 8, pbottom: 8),
+      decoration: const BoxPropertiesDecoration(ptop: 8, pbottom: 8),
       child: const Center(
         child: Text(
           "绵阳市",
@@ -30,7 +33,7 @@ class _PlanSliceState extends State<PlanSlice> {
 
   Widget _createPlan() {
     return FloatingDatum(
-      decoration: const FloatingDatumDecoration(mtop: 10, padding: 20),
+      decoration: const BoxPropertiesDecoration(mtop: 10, padding: 20),
       child: Form(
         child: Column(
           children: [
@@ -42,35 +45,49 @@ class _PlanSliceState extends State<PlanSlice> {
               icon: Icons.location_on,
             ),
             FormInput(
-              controller: _num,
+              controller: _customerNum,
               validator: (e) => e,
               label: "同行人数",
               hint: "旅游计划中同行的人数",
               icon: Icons.account_circle,
             ),
             FormInput(
-              controller: _num,
+              controller: _days,
               validator: (e) => e,
               label: "旅游天数",
               hint: "旅游计划希望持续的天数",
               icon: Icons.more_time,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: FormInput(
-                    controller: _num,
+                    controller: _beginDate,
                     validator: (e) => e,
                     label: "开始日期",
                     hint: "旅游计划在未来什么时候开始",
                     icon: Icons.av_timer,
                   ),
                 ),
-                CircleButton(text: "dd")
+                RevisionElevatedButton(
+                  text: "修改日期",
+                  radius: 20,
+                  decoration: const BoxPropertiesDecoration(mleft: 20),
+                  onTap: () {
+                    print('hello');
+                  },
+                ),
               ],
             ),
-            CircleButton(text: "生成计划"),
+            RevisionElevatedButton(
+              text: "生成计划",
+              radius: 20,
+              decoration: const BoxPropertiesDecoration(),
+              onTap: () {
+                print('hello');
+              },
+            ),
           ],
         ),
       ),
